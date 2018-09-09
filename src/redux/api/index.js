@@ -1,5 +1,5 @@
 import axios from "axios";
-const SERVER_IP = "http://delivery.fleethunt.ca/api";
+const SERVER_IP = "http://delivery.fleethunt.ca/api/";
 const STORE_ID = 1;
 
 var api = axios.create({
@@ -7,10 +7,13 @@ var api = axios.create({
 });
 
 module.exports = {
-  login: function name({ mobile_no, password }) {
+  login: function({ mobile_no, password }) {
     return api.post(
       "customer/authenticate",
       `mobile_no=${mobile_no}&password=${password}&provider=password&store_id=${STORE_ID}`
     );
+  },
+  getDashboard: function() {
+    return api.get(`dashboard?store_id=${STORE_ID}`);
   }
 };

@@ -8,12 +8,9 @@ export const Metrics = {
 
 export const Fonts = {
   ProductSansBold: "ProductSans-Bold",
-  ProductSansBoldItalic:
-    "ProductSans-BoldItalic",
-  ProductSansItalic:
-    "ProductSans-Italic",
-  ProductSansRegular:
-    "ProductSans-Regular"
+  ProductSansBoldItalic: "ProductSans-BoldItalic",
+  ProductSansItalic: "ProductSans-Italic",
+  ProductSansRegular: "ProductSans-Regular"
 };
 
 export const Colors = {
@@ -21,3 +18,5 @@ export const Colors = {
   BRAND_SAFFRON: "#FF812A",
   TEXT_LABEL_GREY: "rgba(1,1,1,0.3)"
 };
+
+export const IMAGE_PLACE_HOLDER = require("../assets/images/pizza_placeholder.png");

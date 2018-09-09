@@ -1,60 +1,30 @@
-import React, {
-  Component
-} from "react";
-import {
-  Text,
-  View,
-  FlatList,
-  Image,
-  TouchableOpacity
-} from "react-native";
+import React, { Component } from "react";
+import { Text, View, FlatList, Image, TouchableOpacity } from "react-native";
 
-const images = [
-  {
-    image: require("../../assets/images/sliderimage.jpg"),
-    index: "1"
-  },
-  {
-    image: require("../../assets/images/sliderimage.jpg"),
-    index: "2"
-  },
-  {
-    image: require("../../assets/images/sliderimage.jpg"),
-    index: "3"
-  },
-  {
-    image: require("../../assets/images/sliderimage.jpg"),
-    index: "4"
-  },
-  {
-    image: require("../../assets/images/sliderimage.jpg"),
-    index: "5"
-  }
-];
+import { IMAGE_PLACE_HOLDER, Metrics } from "../../utils/constants";
 
-const ImageComponent = ({ image }) => (
+const ImageComponent = ({ image_path }) => (
   <Image
+    defaultSource={IMAGE_PLACE_HOLDER}
     style={{
-      width: 340,
+      width: Metrics.FULL_WIDTH - 10,
       height: 200,
-      marginRight: 10
+      marginRight: 10,
+      resizeMode: "cover"
     }}
-    source={image}
+    source={{ uri: image_path }}
   />
 );
 
 export class ImageSlider extends Component {
   renderListItem = item => (
-    <TouchableOpacity
-      onPress={() =>
-        this.props.onPress(item)
-      }
-    >
+    <TouchableOpacity onPress={() => this.props.onPress(item)}>
       <ImageComponent {...item} />
     </TouchableOpacity>
   );
 
   render() {
+    const { dataSource } = this.props;
     return (
       <View
         style={{
@@ -63,18 +33,12 @@ export class ImageSlider extends Component {
         }}
       >
         <FlatList
-          data={images}
+          data={dataSource}
           horizontal
           pagingEnabled
-          showsHorizontalScrollIndicator={
-            false
-          }
-          renderItem={({ item }) =>
-            this.renderListItem(item)
-          }
-          keyExtractor={item =>
-            item.index
-          }
+          showsHorizontalScrollIndicator={false}
+          renderItem={({ item }) => this.renderListItem(item)}
+          keyExtractor={item => String(item.id)}
         />
       </View>
     );

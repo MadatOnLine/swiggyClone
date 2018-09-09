@@ -9,7 +9,7 @@
   "dependencies": {
     "axios": "0.17.1",
     "idx": "^2.4.0",
-    "lodash": "4.17.4",
+    "lodash": "^4.17.4",
     "prop-types": "15.6.0",
     "querystring": "0.2.0",
     "react": "16.4.1",

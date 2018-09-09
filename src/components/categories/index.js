@@ -1,11 +1,5 @@
-import React, {
-  Component
-} from "react";
-import {
-  Text,
-  View,
-  Image
-} from "react-native";
+import React, { Component } from "react";
+import { Text, View, Image } from "react-native";
 
 import { Metrics } from "../../utils/constants";
 import styles from "./styles";
@@ -38,9 +32,10 @@ const mockdata = [
   }
 ];
 
+const foodimage = require("../../assets/images/pizza_placeholder.png");
 export class Categories extends Component {
   render() {
-    const { title } = this.props;
+    const { title, dataSource } = this.props;
     return (
       <View style={styles.container}>
         <Text
@@ -52,24 +47,20 @@ export class Categories extends Component {
           {title}
         </Text>
         <View style={styles.grid}>
-          {mockdata.map(itm => (
-            <View
-              key={itm.index}
-              style={styles.gridItem}
-            >
-              <Image
-                style={styles.gridImage}
-                source={itm.image}
-              />
-              <Text
-                style={
-                  styles.gridSmallText
-                }
-              >
-                {itm.title}
-              </Text>
-            </View>
-          ))}
+          {dataSource && dataSource.length > 0
+            ? dataSource.map(itm => (
+                <View key={itm.id} style={styles.gridItem}>
+                  <Image
+                    style={styles.gridImage}
+                    defaultSource={foodimage}
+                    source={
+                      itm.image_path ? { uri: itm.image_path } : foodimage
+                    }
+                  />
+                  <Text style={styles.gridSmallText}>{itm.title}</Text>
+                </View>
+              ))
+            : null}
         </View>
       </View>
     );
