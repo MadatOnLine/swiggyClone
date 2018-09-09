@@ -6,6 +6,7 @@ import SquareButton from "../squarebutton";
 import { Field, reduxForm } from "redux-form";
 import { connect } from "react-redux";
 import idx from "idx";
+import { login } from "../../redux/actions";
 
 import KeyboardSpacer from "react-native-keyboard-spacer";
 
@@ -63,6 +64,20 @@ class LoginModal extends Component {
     this.state = {};
   }
 
+  handleLogin = async () => {
+    const { formValues, hasError } = this.props;
+    let { mobilenumber, password } = formValues;
+    if (mobilenumber && password && !hasError) {
+      const res = await this.props.login({
+        mobile_no: mobilenumber,
+        password: password
+      });
+      if (res && res.api_token) {
+        this.props.onLoginSuccess();
+      }
+    }
+  };
+
   render() {
     const { dismissModal, hasError } = this.props;
     return (
@@ -92,6 +107,7 @@ class LoginModal extends Component {
             label="Enter your 10 Digit mobile number"
             prefix="+91"
             value={this.props.formValues.mobilenumber}
+            keyboardType="number-pad"
           />
 
           <Field
@@ -109,6 +125,7 @@ class LoginModal extends Component {
             color={Colors.BRAND_SAFFRON}
             label="Login"
             inactive={hasError ? true : false}
+            onPress={this.handleLogin}
           />
           <KeyboardSpacer />
         </View>
@@ -134,5 +151,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  null
+  { login }
 )(LoginModalForm);

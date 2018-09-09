@@ -1,24 +1,11 @@
-import React, {
-  Component
-} from "react";
-import {
-  Text,
-  View,
-  Modal,
-  Image,
-  TouchableOpacity
-} from "react-native";
+import React, { Component } from "react";
+import { Text, View, Modal, Image, TouchableOpacity } from "react-native";
 
-import {
-  Metrics,
-  Colors
-} from "../../utils/constants";
+import { Metrics, Colors } from "../../utils/constants";
 import LoginModal from "../../components/loginmodal";
 import SquareButton from "../../components/squarebutton";
 
-const LoginButton = ({
-  onLoginClick
-}) => (
+const LoginButton = ({ onLoginClick }) => (
   <View
     style={{
       height: Metrics.FULL_HEIGHT * 0.4,
@@ -27,9 +14,7 @@ const LoginButton = ({
       justifyContent: "center"
     }}
   >
-    <Text>
-      Order from wide range of pizzas
-    </Text>
+    <Text>Order from wide range of pizzas</Text>
     <SquareButton label="Register" />
 
     <View
@@ -40,9 +25,7 @@ const LoginButton = ({
     >
       <Text>Have an account ? </Text>
 
-      <TouchableOpacity
-        onPress={onLoginClick}
-      >
+      <TouchableOpacity onPress={onLoginClick}>
         <Text
           style={{
             color: Colors.BRAND_SAFFRON,
@@ -70,35 +53,35 @@ export class LoginScreen extends Component {
     });
   };
 
+  onLoginSuccess = () => {
+    this.setState(
+      {
+        showLoginModal: false
+      },
+      () => this.props.navigation.navigate("Home")
+    );
+  };
+
   render() {
-    const {
-      showLoginModal
-    } = this.state;
+    const { showLoginModal } = this.state;
     return (
       <View>
         <View
           style={{
-            height:
-              Metrics.FULL_HEIGHT * 0.6,
+            height: Metrics.FULL_HEIGHT * 0.6,
             backgroundColor: "green"
           }}
         >
           <Image
             style={{
               width: Metrics.FULL_WIDTH,
-              height:
-                Metrics.FULL_HEIGHT *
-                0.6
+              height: Metrics.FULL_HEIGHT * 0.6
             }}
             source={require("../../assets/images/slide_login.png")}
           />
         </View>
 
-        <LoginButton
-          onLoginClick={
-            this.onLoginClick
-          }
-        />
+        <LoginButton onLoginClick={this.onLoginClick} />
         <Modal
           visible={showLoginModal}
           transparent={true}
@@ -110,6 +93,7 @@ export class LoginScreen extends Component {
                 showLoginModal: false
               })
             }
+            onLoginSuccess={this.onLoginSuccess}
           />
         </Modal>
       </View>

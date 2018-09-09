@@ -1,15 +1,6 @@
-import React, {
-  Component
-} from "react";
-import {
-  Text,
-  View,
-  TouchableOpacity
-} from "react-native";
-import {
-  Metrics,
-  Colors
-} from "../../utils/constants";
+import React, { Component } from "react";
+import { Text, View, TouchableOpacity } from "react-native";
+import { Metrics, Colors } from "../../utils/constants";
 
 const Button = ({
   onClick = () => null,
@@ -18,9 +9,11 @@ const Button = ({
   color = Colors.BRAND_RED,
   label = "Button Label",
   inactive = false,
-  style
+  style,
+  onPress
 }) => (
   <TouchableOpacity
+    onPress={onPress}
     style={[
       {
         width: width,

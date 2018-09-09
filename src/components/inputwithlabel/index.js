@@ -4,7 +4,7 @@ import { Colors, Metrics } from "../../utils/constants";
 
 const InputWithLabel = ({
   prefix = "+91",
-  keyboardType = "number-pad",
+  keyboardType = "default",
   maxLength = 10,
   label = "text label",
   secureEntry = false,
