@@ -15,8 +15,8 @@ const splashimage = require("../../assets/images/pembina1024.png");
 export class SplashScreen extends Component {
   componentDidMount() {
     setTimeout(() => {
-      this.props.navigation.navigate(
-        "Home"
+      this.props.navigation.replace(
+        "Login"
       );
     }, 1000);
   }

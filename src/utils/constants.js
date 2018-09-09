@@ -15,3 +15,9 @@ export const Fonts = {
   ProductSansRegular:
     "ProductSans-Regular"
 };
+
+export const Colors = {
+  BRAND_RED: "#981A1F",
+  BRAND_SAFFRON: "#FF812A",
+  TEXT_LABEL_GREY: "rgba(1,1,1,0.3)"
+};
