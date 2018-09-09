@@ -5,7 +5,9 @@ import {
   LOGIN_SUCCESSFUL,
   GET_DASH_BOARD_FAILED,
   GET_DASH_BOARD_REQUEST,
-  GET_DASH_BOARD_SUCCESSFUL
+  GET_DASH_BOARD_SUCCESSFUL,
+  ADD_ITEM_TO_CART,
+  REMOVE_ITEM_FROM_CART
 } from "../constants";
 export const login = params => {
   return dispatch => {
@@ -56,5 +58,19 @@ export const getDashboardData = () => {
           reject(e);
         });
     });
+  };
+};
+
+export const addToCart = item => {
+  return {
+    type: ADD_ITEM_TO_CART,
+    payload: item
+  };
+};
+
+export const removeItemFromCart = item => {
+  return {
+    type: REMOVE_ITEM_FROM_CART,
+    payload: item
   };
 };

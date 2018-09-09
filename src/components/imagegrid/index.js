@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Text, View, Image } from "react-native";
+import { Text, View, Image, TouchableOpacity } from "react-native";
 import _ from "lodash";
 
 import { Metrics, IMAGE_PLACE_HOLDER } from "../../utils/constants";
@@ -7,14 +7,22 @@ import styles from "./styles";
 
 export class ImageGrid extends Component {
   render() {
-    const { title, dataSource } = this.props;
+    const { title, dataSource, onAddToCart } = this.props;
     return (
       <View style={styles.container}>
         <Text> {title} </Text>
         <View style={styles.grid}>
           {dataSource && dataSource.length > 0
             ? dataSource.map(itm => (
-                <View key={itm.id} style={styles.gridItem}>
+                <View
+                  key={itm.id}
+                  style={[
+                    styles.gridItem,
+                    {
+                      justifyContent: "space-around"
+                    }
+                  ]}
+                >
                   <Image
                     style={styles.gridImage}
                     defaultSource={IMAGE_PLACE_HOLDER}
@@ -58,7 +66,8 @@ export class ImageGrid extends Component {
                     >
                       ${itm.selling_price}
                     </Text>
-                    <View
+                    <TouchableOpacity
+                      onPress={() => onAddToCart(itm)}
                       style={{
                         borderWidth: 1,
                         borderColor: "green",
@@ -76,7 +85,7 @@ export class ImageGrid extends Component {
                       >
                         ADD
                       </Text>
-                    </View>
+                    </TouchableOpacity>
                   </View>
                 </View>
               ))

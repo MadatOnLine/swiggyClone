@@ -2,7 +2,11 @@ import React, { Component } from "react";
 import { Text, View, ScrollView } from "react-native";
 import { connect } from "react-redux";
 
-import { getDashboardData } from "../../redux/actions";
+import {
+  getDashboardData,
+  addToCart,
+  removeItemFromCart
+} from "../../redux/actions";
 
 import ImageSlider from "../../components/imageslider";
 import Categories from "../../components/categories";
@@ -31,8 +35,6 @@ export class Home extends Component {
 
   resolveDashboardData = async () => {
     let res = await this.props.getDashboardData();
-    console.log(res);
-    debugger;
   };
 
   componentWillReceiveProps(nextProps) {
@@ -58,18 +60,21 @@ export class Home extends Component {
 
     if (
       nextProps &&
-      nextProps.offers &&
-      nextProps.offers !== this.props.offers
+      nextProps.products &&
+      nextProps.products !== this.props.products
     ) {
       this.setState({
-        offers: nextProps.offers
+        products: nextProps.products
       });
     }
   }
 
+  onAddToCart = item => {
+    this.props.addToCart(item);
+  };
+
   render() {
     const { categories, offers, products } = this.state;
-    console.log("Categories", categories);
     return (
       <View
         style={{
@@ -85,8 +90,11 @@ export class Home extends Component {
             dataSource={offers}
           />
           <Categories title="Categories" dataSource={categories} />
-          <ImageGrid title="Best Sellers" dataSource={products} />
-          {/* <MenuList title="Best Sellers" /> */}
+          <ImageGrid
+            title="Best Sellers"
+            dataSource={products}
+            onAddToCart={this.onAddToCart}
+          />
         </ScrollView>
       </View>
     );
@@ -106,5 +114,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { getDashboardData }
+  { getDashboardData, addToCart, removeItemFromCart }
 )(Home);
