@@ -37,7 +37,7 @@ export class Home extends Component {
           />
           <Categories title="Categories" />
           <ImageGrid title="Best Sellers" />
-          <MenuList title="Best Sellers" />
+          {/* <MenuList title="Best Sellers" /> */}
         </ScrollView>
       </View>
     );

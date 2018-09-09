@@ -43,7 +43,14 @@ export class Categories extends Component {
     const { title } = this.props;
     return (
       <View style={styles.container}>
-        <Text> {title} </Text>
+        <Text
+          style={{
+            fontSize: 18,
+            fontWeight: "500"
+          }}
+        >
+          {title}
+        </Text>
         <View style={styles.grid}>
           {mockdata.map(itm => (
             <View
