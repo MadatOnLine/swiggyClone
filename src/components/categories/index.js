@@ -4,34 +4,6 @@ import { Text, View, Image } from "react-native";
 import { Metrics } from "../../utils/constants";
 import styles from "./styles";
 
-const mockdata = [
-  {
-    image: require("../../assets/images/foodimage.jpg"),
-    index: "1",
-    title: "Salads"
-  },
-  {
-    image: require("../../assets/images/foodimage.jpg"),
-    index: "2",
-    title: "Roosters"
-  },
-  {
-    image: require("../../assets/images/foodimage.jpg"),
-    index: "3",
-    title: "Sandwich"
-  },
-  {
-    image: require("../../assets/images/foodimage.jpg"),
-    index: "4",
-    title: "Sides"
-  },
-  {
-    image: require("../../assets/images/foodimage.jpg"),
-    index: "5",
-    title: "Beverages"
-  }
-];
-
 const foodimage = require("../../assets/images/pizza_placeholder.png");
 export class Categories extends Component {
   render() {

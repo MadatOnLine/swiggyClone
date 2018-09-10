@@ -16,7 +16,9 @@ export const Fonts = {
 export const Colors = {
   BRAND_RED: "#981A1F",
   BRAND_SAFFRON: "#FF812A",
-  TEXT_LABEL_GREY: "rgba(1,1,1,0.3)"
+  TEXT_LABEL_GREY: "rgba(1,1,1,0.3)",
+  SCREEN_WHITE: "rgba(255,255,255,0.3)",
+  REAL_WHITE : 'rgba(255,255,255,1)'
 };
 
 export const IMAGE_PLACE_HOLDER = require("../assets/images/pizza_placeholder.png");

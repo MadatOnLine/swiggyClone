@@ -4,6 +4,7 @@ import { createBottomTabNavigator } from "react-navigation";
 import Icon from "react-native-vector-icons/Ionicons";
 import Home from "../containers/home";
 import CartIcon from "../components/cartIcon";
+import Cart from "../containers/cart";
 
 class HomeScreen extends React.Component {
   render() {
@@ -55,7 +56,7 @@ export default createBottomTabNavigator({
     })
   },
   Cart: {
-    screen: HomeScreen,
+    screen: Cart,
     navigationOptions: () => ({
       title: `Cart`,
       headerBackTitle: null,
