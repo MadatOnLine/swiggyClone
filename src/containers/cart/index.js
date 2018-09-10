@@ -1,7 +1,9 @@
 import React, { Component } from "react";
-import { View, Text, Image } from "react-native";
+import { View, Text, Image, ScrollView } from "react-native";
 import { CartItem } from "./cartItem";
 import Bill from "./bill";
+import Addresses from "./addresses";
+import PayNowButton from "./paybutton";
 import { Colors } from "../../utils/constants";
 import Icon from "react-native-vector-icons/Ionicons";
 
@@ -22,43 +24,44 @@ class Cart extends Component {
         }}
       >
         <CartItem />
-
-        <View
-          style={{
-            backgroundColor: Colors.REAL_WHITE,
-            marginVertical: 15,
-            paddingVertical: 15,
-            paddingHorizontal: 10,
-            flexDirection: "row",
-            alignItems: "center"
-          }}
-        >
-          <Image
+        <ScrollView>
+          <View
             style={{
-              width: 20,
-              height: 20,
-              marginRight: 20
-            }}
-            source={discountImage}
-          />
-          <Text
-            style={{
-              flex: 1,
-              fontWeight: "500"
+              backgroundColor: Colors.REAL_WHITE,
+              marginVertical: 15,
+              paddingVertical: 15,
+              paddingHorizontal: 10,
+              flexDirection: "row",
+              alignItems: "center"
             }}
           >
-            APPLY COUPON ?
-          </Text>
-          <Icon
-            name="ios-arrow-forward-outline"
-            size={20}
-            color={Colors.TEXT_LABEL_GREY}
-          />
-        </View>
+            <Image
+              style={{
+                width: 20,
+                height: 20,
+                marginRight: 20
+              }}
+              source={discountImage}
+            />
+            <Text
+              style={{
+                flex: 1,
+                fontWeight: "500"
+              }}
+            >
+              APPLY COUPON ?
+            </Text>
+            <Icon
+              name="ios-arrow-forward-outline"
+              size={20}
+              color={Colors.TEXT_LABEL_GREY}
+            />
+          </View>
 
-        <Bill />
-        <Text>Address</Text>
-        <Text>Pay button</Text>
+          <Bill />
+          <Addresses />
+        </ScrollView>
+        <PayNowButton />
       </View>
     );
   }

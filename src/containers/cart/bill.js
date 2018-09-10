@@ -12,7 +12,7 @@ const RowItem = ({ label, value }) => (
     <Text
       style={{
         flex: 1,
-        fontSize: 14
+        fontSize: 12
       }}
     >
       {label}
@@ -21,7 +21,7 @@ const RowItem = ({ label, value }) => (
     <Text
       style={{
         marginHorizontal: 10,
-        fontSize: 14
+        fontSize: 12
       }}
     >
       {value}
@@ -43,10 +43,11 @@ export class Bill extends Component {
         <Text
           style={{
             fontWeight: "400",
-            fontSize: 16
+            fontSize: 14,
+            marginBottom: 10
           }}
         >
-          Res Bill
+          Your Bill
         </Text>
 
         <RowItem label="Item total" value="$200" />
