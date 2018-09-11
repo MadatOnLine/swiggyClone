@@ -25,7 +25,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginVertical: 5,
     marginHorizontal: 5,
-    justifyContent: "space-between"
+    justifyContent: "space-between",
+    maxHeight: 30
   },
   removeItems: {
     paddingRight: 10,

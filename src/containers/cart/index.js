@@ -6,6 +6,8 @@ import Addresses from "./addresses";
 import PayNowButton from "./paybutton";
 import { Colors } from "../../utils/constants";
 import Icon from "react-native-vector-icons/Ionicons";
+import idx from "idx";
+import { connect } from "react-redux";
 
 let discountImage = require("../../assets/images/discount.png");
 
@@ -16,6 +18,7 @@ class Cart extends Component {
   }
 
   render() {
+    const { cartItems } = this.props;
     return (
       <View
         style={{
@@ -23,8 +26,16 @@ class Cart extends Component {
           backgroundColor: Colors.SCREEN_WHITE
         }}
       >
-        <CartItem />
-        <ScrollView>
+        <ScrollView showsVerticalScrollIndicator={false}>
+          {cartItems && cartItems.length > 0
+            ? cartItems.map((itm, ind) => (
+                <CartItem
+                  key={ind}
+                  {...itm}
+                  count={cartItems.filter(k => k.id === itm.id).length}
+                />
+              ))
+            : null}
           <View
             style={{
               backgroundColor: Colors.REAL_WHITE,
@@ -67,4 +78,14 @@ class Cart extends Component {
   }
 }
 
-export default Cart;
+const mapStateToProps = state => {
+  let cartItems = idx(state, _ => _.cart) || [];
+  return {
+    cartItems
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  null
+)(Cart);

@@ -1,26 +1,35 @@
 import React, { Component } from "react";
 import { View, Text, Image } from "react-native";
 import styles from "./styles";
+import { IMAGE_PLACE_HOLDER } from "../../utils/constants";
 
-let image_path =
-  "http://delivery.fleethunt.ca/app/1/products/5b18dc75da57c.jpg";
-
-const CartItem = () => (
+const CartItem = ({
+  image_path,
+  title,
+  subtitle,
+  mrp,
+  selling_price,
+  count
+}) => (
   <View style={styles.wrapper}>
-    <Image style={styles.image} source={{ uri: image_path }} />
+    <Image
+      defaultSource={IMAGE_PLACE_HOLDER}
+      style={styles.image}
+      source={image_path ? { uri: image_path } : IMAGE_PLACE_HOLDER}
+    />
 
     <View style={styles.itemTextWrapper}>
-      <Text>Chicken Pizza</Text>
-      <Text style={styles.itemSubText}>Grilled</Text>
+      <Text>{title}</Text>
+      <Text style={styles.itemSubText}>{subtitle}</Text>
     </View>
 
     <View style={styles.addItemsButtonWrapper}>
       <Text style={styles.removeItems}>-</Text>
-      <Text style={styles.itemCount}>1</Text>
+      <Text style={styles.itemCount}>{count}</Text>
       <Text style={styles.addMoreItem}>+</Text>
     </View>
     <View style={styles.itemPriceWrapper}>
-      <Text>$150.00</Text>
+      <Text>{`$${selling_price}`}</Text>
     </View>
   </View>
 );
