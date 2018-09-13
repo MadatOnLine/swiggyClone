@@ -1,34 +1,19 @@
-export const getCartItemCount = (items = []) => {
-  //   debugger;
-  //   let result = 0;
-  //   if (items && items.length > 1) {
-  //     grouped = [
-  //       ...items
-  //         .reduce((mp, o) => {
-  //           if (!mp.has(o._id)) mp.set(o._id, Object.assign({ extra: 0 }, o));
-  //           mp.get(o._id).extra++;
-  //           return mp;
-  //         }, new Map())
-  //         .values()
-  //     ];
+import _ from "lodash";
+let tax = 18;
 
-  //     console.log("grouped", grouped);
-  //     return items.length;
-  //   } else {
-  //     result = items.length;
-  //   }
+export const getCartTotal = cart => {
+  let cartMainItemTotal = 0;
 
-  result = [];
+  if (cart && cart.length > 0) {
+    cart.forEach(element => {
+      let elementTotal = element.mrp * element.count;
+      cartMainItemTotal = cartMainItemTotal + elementTotal;
+    });
+  }
 
-  items.forEach(function(a) {
-    if (!this[a.id]) {
-      this[a.id] = { id: a.id, contributions: 0 };
-      result.push(this[a.id]);
-    }
-    this[a.id].contributions += a.contributions || 0;
-  }, Object.create(null));
-
-  console.log(result);
-
-  return result;
+  return cartMainItemTotal;
 };
+
+export const formatNumber = number => parseFloat(number).toFixed(2);
+
+export const getTaxAmount = amount => amount * (tax / 100);

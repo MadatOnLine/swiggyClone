@@ -1,9 +1,11 @@
 import React, { Component } from "react";
 import { Text, View } from "react-native";
 import { Colors } from "../../utils/constants";
+import { formatNumber } from "../../utils/helpers";
 
 export class PayButton extends Component {
   render() {
+    const { total } = this.props;
     return (
       <View
         style={{
@@ -25,7 +27,7 @@ export class PayButton extends Component {
               fontWeight: "400"
             }}
           >
-            {"$192.00"}
+            {`$${formatNumber(total)}`}
           </Text>
           <Text
             style={{

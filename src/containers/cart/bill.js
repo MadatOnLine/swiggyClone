@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Text, View } from "react-native";
 import { Colors } from "../../utils/constants";
+import { formatNumber } from "../../utils/helpers";
 
 const RowItem = ({ label, value }) => (
   <View
@@ -11,26 +12,33 @@ const RowItem = ({ label, value }) => (
   >
     <Text
       style={{
-        flex: 1,
+        flex: 4,
         fontSize: 12
       }}
     >
       {label}
     </Text>
 
-    <Text
+    <View
       style={{
-        marginHorizontal: 10,
-        fontSize: 12
+        width: 80,
+        paddingLeft: 20
       }}
     >
-      {value}
-    </Text>
+      <Text
+        style={{
+          fontSize: 12
+        }}
+      >
+        {value}
+      </Text>
+    </View>
   </View>
 );
 
 export class Bill extends Component {
   render() {
+    const { itemTotal, tax, total } = this.props;
     return (
       <View
         style={{
@@ -50,10 +58,10 @@ export class Bill extends Component {
           Your Bill
         </Text>
 
-        <RowItem label="Item total" value="$200" />
-        <RowItem label="Tax" value="$200" />
-        <RowItem label="Delivery charge" value="$200" />
-        <RowItem label="To pay" value="$200" />
+        <RowItem label="Item total" value={`$${formatNumber(itemTotal)}`} />
+        <RowItem label="Tax" value={`$${formatNumber(tax)}`} />
+        <RowItem label="Delivery charge" value="$0.00" />
+        <RowItem label="To pay" value={`$${formatNumber(total)}`} />
       </View>
     );
   }

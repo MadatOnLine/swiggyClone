@@ -10,6 +10,7 @@ import idx from "idx";
 import { connect } from "react-redux";
 import { addToCart, removeItemFromCart } from "../../redux/actions";
 import CartEmpty from "./cartEmpty";
+import { getCartTotal, getTaxAmount } from "../../utils/helpers";
 
 let discountImage = require("../../assets/images/discount.png");
 
@@ -21,6 +22,9 @@ class Cart extends Component {
 
   render() {
     const { cartItems } = this.props;
+    let cartTotal = getCartTotal(cartItems);
+    let tax = getTaxAmount(cartTotal);
+    let total = cartTotal + tax;
     if (cartItems && cartItems.length > 0) {
       return (
         <View
@@ -80,10 +84,10 @@ class Cart extends Component {
               />
             </View>
 
-            <Bill />
+            <Bill itemTotal={cartTotal} tax={tax} total={total} />
             <Addresses />
           </ScrollView>
-          <PayNowButton />
+          <PayNowButton total={total} />
         </View>
       );
     } else {
