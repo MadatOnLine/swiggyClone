@@ -15,5 +15,12 @@ module.exports = {
   },
   getDashboard: function() {
     return api.get(`dashboard?store_id=${STORE_ID}`);
+  },
+  getPastOrders: function(accessToken) {
+    return api.get(`order/all`, {
+      headers: {
+        authorization: `Bearer ${accessToken}`
+      }
+    });
   }
 };

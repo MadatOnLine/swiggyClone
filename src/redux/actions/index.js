@@ -7,7 +7,10 @@ import {
   GET_DASH_BOARD_REQUEST,
   GET_DASH_BOARD_SUCCESSFUL,
   ADD_ITEM_TO_CART,
-  REMOVE_ITEM_FROM_CART
+  REMOVE_ITEM_FROM_CART,
+  GET_PAST_ORDERS_REQUEST,
+  GET_PAST_ORDERS_SUCCESSFUL,
+  GET_PAST_ORDERS_FAILED
 } from "../constants";
 export const login = params => {
   return dispatch => {
@@ -72,5 +75,31 @@ export const removeItemFromCart = item => {
   return {
     type: REMOVE_ITEM_FROM_CART,
     payload: item
+  };
+};
+
+export const getPastOrders = accessToken => {
+  return dispatch => {
+    return new Promise((resolve, reject) => {
+      dispatch({ type: GET_PAST_ORDERS_REQUEST });
+      return api
+        .getPastOrders(accessToken)
+        .then(response => {
+          if (response && response.data) {
+            dispatch({
+              type: GET_PAST_ORDERS_SUCCESSFUL,
+              payload: response.data
+            });
+            resolve(response.data);
+          }
+        })
+        .catch(e => {
+          dispatch({
+            type: GET_PAST_ORDERS_FAILED,
+            payload: e
+          });
+          reject(e);
+        });
+    });
   };
 };

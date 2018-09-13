@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, Image } from "react-native";
+import { View, Text, Image, TouchableOpacity } from "react-native";
 import styles from "./styles";
 import { IMAGE_PLACE_HOLDER } from "../../utils/constants";
 
@@ -9,7 +9,10 @@ const CartItem = ({
   subtitle,
   mrp,
   selling_price,
-  count
+  count,
+  onAddToCart,
+  onRemoveFromCart,
+  object
 }) => (
   <View style={styles.wrapper}>
     <Image
@@ -24,9 +27,14 @@ const CartItem = ({
     </View>
 
     <View style={styles.addItemsButtonWrapper}>
-      <Text style={styles.removeItems}>-</Text>
+      <TouchableOpacity onPress={() => onRemoveFromCart(object)}>
+        <Text style={styles.removeItems}>-</Text>
+      </TouchableOpacity>
+
       <Text style={styles.itemCount}>{count}</Text>
-      <Text style={styles.addMoreItem}>+</Text>
+      <TouchableOpacity onPress={() => onAddToCart(object)}>
+        <Text style={styles.addMoreItem}>+</Text>
+      </TouchableOpacity>
     </View>
     <View style={styles.itemPriceWrapper}>
       <Text>{`$${selling_price}`}</Text>

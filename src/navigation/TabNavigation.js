@@ -5,6 +5,7 @@ import Icon from "react-native-vector-icons/Ionicons";
 import Home from "../containers/home";
 import CartIcon from "../components/cartIcon";
 import Cart from "../containers/cart";
+import Account from "../containers/account";
 
 class HomeScreen extends React.Component {
   render() {
@@ -64,7 +65,7 @@ export default createBottomTabNavigator({
     })
   },
   Account: {
-    screen: HomeScreen,
+    screen: Account,
     navigationOptions: () => ({
       title: `Account`,
       headerBackTitle: null,

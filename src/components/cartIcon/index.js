@@ -3,6 +3,7 @@ import { Text, View } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import { connect } from "react-redux";
 import idx from "idx";
+import { getCartItemCount } from "../../utils/helpers";
 
 export class CartIcon extends Component {
   render() {
@@ -45,8 +46,9 @@ export class CartIcon extends Component {
 }
 
 const mapStateToProps = state => {
+  let cartItemCount = state && state.cart ? state.cart.length : 0;
   return {
-    cartItemCount: state.cart ? state.cart.length : 0
+    cartItemCount: cartItemCount
   };
 };
 
