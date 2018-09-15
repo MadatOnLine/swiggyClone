@@ -10,7 +10,10 @@ import {
   REMOVE_ITEM_FROM_CART,
   GET_PAST_ORDERS_REQUEST,
   GET_PAST_ORDERS_SUCCESSFUL,
-  GET_PAST_ORDERS_FAILED
+  GET_PAST_ORDERS_FAILED,
+  GET_ADDRESSES_FAILED,
+  GET_ADDRESSES_REQUEST,
+  GET_ADDRESSES_SUCCESSFUL
 } from "../constants";
 export const login = params => {
   return dispatch => {
@@ -96,6 +99,32 @@ export const getPastOrders = accessToken => {
         .catch(e => {
           dispatch({
             type: GET_PAST_ORDERS_FAILED,
+            payload: e
+          });
+          reject(e);
+        });
+    });
+  };
+};
+
+export const getMyAddresses = accessToken => {
+  return dispatch => {
+    return new Promise((resolve, reject) => {
+      dispatch({ type: GET_ADDRESSES_REQUEST });
+      return api
+        .getAddresses(accessToken)
+        .then(response => {
+          if (response && response.data) {
+            dispatch({
+              type: GET_ADDRESSES_SUCCESSFUL,
+              payload: response.data
+            });
+            resolve(response.data);
+          }
+        })
+        .catch(e => {
+          dispatch({
+            type: GET_ADDRESSES_FAILED,
             payload: e
           });
           reject(e);

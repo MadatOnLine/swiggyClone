@@ -4,7 +4,9 @@ const initialState = ip.freeze([]);
 import { ADD_ITEM_TO_CART, REMOVE_ITEM_FROM_CART } from "../constants";
 
 export default (state = initialState, action) => {
-  let index = state.findIndex(i => i.id === action.payload.id);
+  if (action.type === (ADD_ITEM_TO_CART || REMOVE_ITEM_FROM_CART)) {
+    let index = state.findIndex(i => i.id === action.payload.id);
+  }
   switch (action.type) {
     case ADD_ITEM_TO_CART:
       if (index < 0) {

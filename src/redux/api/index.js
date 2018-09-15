@@ -22,5 +22,12 @@ module.exports = {
         authorization: `Bearer ${accessToken}`
       }
     });
+  },
+  getAddresses: function(accessToken) {
+    return api.get(`customer/addresses`, {
+      headers: {
+        authorization: `Bearer ${accessToken}`
+      }
+    });
   }
 };

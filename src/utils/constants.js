@@ -20,7 +20,8 @@ export const Colors = {
   SCREEN_WHITE: "rgba(255,255,255,0.3)",
   REAL_WHITE: "rgba(255,255,255,1)",
   BRAND_GREEN: "#63B14C",
-  BRAND_BLUE: "#95B5E1"
+  BRAND_BLUE: "#95B5E1",
+  KINDA_BLACK: "rgba(1,1,1,0.7)"
 };
 
 export const IMAGE_PLACE_HOLDER = require("../assets/images/pizza_placeholder.png");

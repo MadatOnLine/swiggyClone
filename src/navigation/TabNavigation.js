@@ -6,38 +6,7 @@ import Home from "../containers/home";
 import CartIcon from "../components/cartIcon";
 import Cart from "../containers/cart";
 import Account from "../containers/account";
-
-class HomeScreen extends React.Component {
-  render() {
-    return (
-      <View
-        style={{
-          flex: 1,
-          justifyContent: "center",
-          alignItems: "center"
-        }}
-      >
-        <Text>Home!</Text>
-      </View>
-    );
-  }
-}
-
-class SettingsScreen extends React.Component {
-  render() {
-    return (
-      <View
-        style={{
-          flex: 1,
-          justifyContent: "center",
-          alignItems: "center"
-        }}
-      >
-        <Text>Settings!</Text>
-      </View>
-    );
-  }
-}
+import Explore from "../containers/explore";
 
 export default createBottomTabNavigator({
   Home: {
@@ -49,7 +18,7 @@ export default createBottomTabNavigator({
     })
   },
   Explore: {
-    screen: HomeScreen,
+    screen: Explore,
     navigationOptions: () => ({
       title: `Explore`,
       headerBackTitle: null,
