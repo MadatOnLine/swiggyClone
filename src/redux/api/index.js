@@ -29,5 +29,15 @@ module.exports = {
         authorization: `Bearer ${accessToken}`
       }
     });
+  },
+  getCategoryItems: function(categoryId, accessToken) {
+    return api.get(
+      `category/items?category_id=${categoryId}&store_id=${STORE_ID}&offset=0&page_size=25`,
+      {
+        headers: {
+          authorization: `Bearer ${accessToken}`
+        }
+      }
+    );
   }
 };

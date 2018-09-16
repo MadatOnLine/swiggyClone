@@ -8,11 +8,13 @@ const brandLogo = require("../../assets/images/pembina1024.png");
 
 export class Header extends Component {
   render() {
-    const { onEditAddress } = this.props;
+    const { onEditAddress, selectedAddress = {} } = this.props;
     return (
       <TouchableOpacity style={styles.wrapper} onPress={onEditAddress}>
         <View style={styles.addressWrapper}>
-          <Text style={styles.addressLabel}>Home</Text>
+          <Text style={styles.addressLabel}>
+            {selectedAddress.type || "Please select Address"}
+          </Text>
           <View style={styles.downIcon}>
             <Icon
               name="ios-arrow-down"
@@ -23,7 +25,9 @@ export class Header extends Component {
           </View>
         </View>
         <View />
-        <Text style={styles.addressSubText}>Gayatri Tapovan</Text>
+        <Text style={styles.addressSubText}>
+          {selectedAddress.locality || ""}
+        </Text>
       </TouchableOpacity>
     );
   }

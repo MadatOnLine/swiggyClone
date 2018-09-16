@@ -1,14 +1,15 @@
 import React, { Component } from "react";
-import { Text, View, FlatList } from "react-native";
+import { Text, View, FlatList, TouchableOpacity } from "react-native";
 import Header from "./header";
 import { Colors } from "../../utils/constants";
 import Icon from "react-native-vector-icons/Ionicons";
-import { getMyAddresses } from "../../redux/actions";
+import { getMyAddresses, selectAddressForDelivery } from "../../redux/actions";
 import { connect } from "react-redux";
 import idx from "idx";
 
-const Suggestion = ({ icon, label, type, locality }) => (
-  <View
+const Suggestion = ({ icon, label, type, locality, onPress }) => (
+  <TouchableOpacity
+    onPress={onPress}
     style={{
       flexDirection: "row",
       alignItems: "center",
@@ -52,7 +53,7 @@ const Suggestion = ({ icon, label, type, locality }) => (
         {type}
       </Text>
     </View>
-  </View>
+  </TouchableOpacity>
 );
 
 let suggestions = [
@@ -100,6 +101,11 @@ export class AddressPicker extends Component {
     }
   }
 
+  onSelectAddress = async address => {
+    await this.props.selectAddressForDelivery(address);
+    this.props.navigation.pop();
+  };
+
   render() {
     const { addresses } = this.state;
     return (
@@ -111,13 +117,16 @@ export class AddressPicker extends Component {
       >
         <Header onChangeText={() => null} onLeft={this.props.navigation.pop} />
         <FlatList
+          keyboardShouldPersistTaps="always"
           contentContainerStyle={{
             backgroundColor: Colors.REAL_WHITE,
             marginTop: 20,
             paddingHorizontal: 10,
             paddingVertical: 15
           }}
-          renderItem={({ item }) => <Suggestion {...item} />}
+          renderItem={({ item }) => (
+            <Suggestion {...item} onPress={() => this.onSelectAddress(item)} />
+          )}
           data={addresses}
           keyExtractor={item => String(item.id)}
         />
@@ -128,7 +137,7 @@ export class AddressPicker extends Component {
 
 const mapStateToProps = state => {
   let api_token = idx(state, _ => _.user.api_token);
-  let addresses = idx(state, _ => _.addresses);
+  let addresses = idx(state, _ => _.addresses.addresses);
   return {
     api_token,
     addresses
@@ -137,5 +146,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { getMyAddresses }
+  { getMyAddresses, selectAddressForDelivery }
 )(AddressPicker);

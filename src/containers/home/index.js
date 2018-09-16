@@ -2,6 +2,7 @@ import { createStackNavigator } from "react-navigation";
 
 import Home from "./home";
 import AddressPicker from "../addressPicker";
+import CategoryDetail from "../categoryDetails";
 
 export default createStackNavigator(
   {
@@ -10,6 +11,9 @@ export default createStackNavigator(
     },
     EditAddress: {
       screen: AddressPicker
+    },
+    CategoryDetail: {
+      screen: CategoryDetail
     }
   },
   {

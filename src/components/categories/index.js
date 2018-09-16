@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Text, View, Image } from "react-native";
+import { Text, View, Image, TouchableHighlight } from "react-native";
 
 import { Metrics } from "../../utils/constants";
 import styles from "./styles";
@@ -7,7 +7,7 @@ import styles from "./styles";
 const foodimage = require("../../assets/images/pizza_placeholder.png");
 export class Categories extends Component {
   render() {
-    const { title, dataSource } = this.props;
+    const { title, dataSource, onItemClick } = this.props;
     return (
       <View style={styles.container}>
         <Text
@@ -21,16 +21,22 @@ export class Categories extends Component {
         <View style={styles.grid}>
           {dataSource && dataSource.length > 0
             ? dataSource.map(itm => (
-                <View key={itm.id} style={styles.gridItem}>
-                  <Image
-                    style={styles.gridImage}
-                    defaultSource={foodimage}
-                    source={
-                      itm.image_path ? { uri: itm.image_path } : foodimage
-                    }
-                  />
-                  <Text style={styles.gridSmallText}>{itm.title}</Text>
-                </View>
+                <TouchableHighlight
+                  underlayColor="transparent"
+                  key={itm.id}
+                  onPress={() => onItemClick(itm)}
+                >
+                  <View style={styles.gridItem}>
+                    <Image
+                      style={styles.gridImage}
+                      defaultSource={foodimage}
+                      source={
+                        itm.image_path ? { uri: itm.image_path } : foodimage
+                      }
+                    />
+                    <Text style={styles.gridSmallText}>{itm.title}</Text>
+                  </View>
+                </TouchableHighlight>
               ))
             : null}
         </View>

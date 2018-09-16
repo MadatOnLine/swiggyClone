@@ -6,6 +6,7 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     backgroundColor: "white",
     paddingHorizontal: 10
+    // width: 140
   },
   image: {
     width: 40,

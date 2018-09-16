@@ -5,7 +5,8 @@ import { connect } from "react-redux";
 import {
   getDashboardData,
   addToCart,
-  removeItemFromCart
+  removeItemFromCart,
+  getCategoryItemsById
 } from "../../redux/actions";
 
 import ImageSlider from "../../components/imageslider";
@@ -14,6 +15,7 @@ import ImageGrid from "../../components/imagegrid";
 import MenuList from "../../components/menulist";
 import Header from "../../components/header";
 import idx from "idx";
+import { GET_ADDRESSES_FAILED } from "../../redux/constants";
 
 export class Home extends Component {
   constructor(props) {
@@ -21,7 +23,8 @@ export class Home extends Component {
     this.state = {
       categories: props.categories || [],
       offers: props.offers || [],
-      products: props.products || []
+      products: props.products || [],
+      selectedAddress: props.selectedAddress
     };
   }
 
@@ -67,6 +70,16 @@ export class Home extends Component {
         products: nextProps.products
       });
     }
+
+    if (
+      nextProps &&
+      nextProps.selectedAddress &&
+      nextProps.selectedAddress !== this.props.selectedAddress
+    ) {
+      this.setState({
+        selectedAddress: nextProps.selectedAddress
+      });
+    }
   }
 
   onAddToCart = item => {
@@ -77,8 +90,13 @@ export class Home extends Component {
     this.props.navigation.navigate("EditAddress");
   };
 
+  onCategoryItemClick = async item => {
+    await this.props.getCategoryItemsById(item.id);
+    this.props.navigation.navigate("CategoryDetail", { item: item });
+  };
+
   render() {
-    const { categories, offers, products } = this.state;
+    const { categories, offers, products, selectedAddress } = this.state;
     return (
       <View
         style={{
@@ -87,13 +105,20 @@ export class Home extends Component {
           marginTop: 25
         }}
       >
-        <Header onEditAddress={this.handleEditAddress} />
+        <Header
+          onEditAddress={this.handleEditAddress}
+          selectedAddress={selectedAddress}
+        />
         <ScrollView>
           <ImageSlider
             onPress={this.onCarousalItemClicked}
             dataSource={offers}
           />
-          <Categories title="Categories" dataSource={categories} />
+          <Categories
+            title="Categories"
+            dataSource={categories}
+            onItemClick={this.onCategoryItemClick}
+          />
           <ImageGrid
             title="Best Sellers"
             dataSource={products}
@@ -109,14 +134,18 @@ const mapStateToProps = state => {
   let categories = idx(state, _ => _.dashboard.data.categories) || [];
   let offers = idx(state, _ => _.dashboard.data.offers) || [];
   let products = idx(state, _ => _.dashboard.data.products) || [];
+  let api_token = idx(state, _ => _.user.api_token) || "";
+  let selectedAddress = idx(state, _ => _.addresses.selectedAddress);
   return {
     categories,
     offers,
-    products
+    products,
+    selectedAddress,
+    api_token
   };
 };
 
 export default connect(
   mapStateToProps,
-  { getDashboardData, addToCart, removeItemFromCart }
+  { getDashboardData, addToCart, removeItemFromCart, getCategoryItemsById }
 )(Home);

@@ -6,6 +6,7 @@ import cart from "./cart";
 import { reducer } from "redux-form";
 import orders from "./orders";
 import addresses from "./addresses";
+import categoryItems from "./categoryItems";
 
 export default combineReducers({
   user,
@@ -14,5 +15,6 @@ export default combineReducers({
   promises,
   orders,
   addresses,
+  categoryItems,
   form: reducer
 });
