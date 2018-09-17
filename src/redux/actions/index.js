@@ -92,12 +92,12 @@ export const getPastOrders = accessToken => {
       return api
         .getPastOrders(accessToken)
         .then(response => {
-          if (response && response.data) {
+          if (response && response.data && response.data.orders) {
             dispatch({
               type: GET_PAST_ORDERS_SUCCESSFUL,
-              payload: response.data
+              payload: response.data.orders
             });
-            resolve(response.data);
+            resolve(response.data.orders);
           }
         })
         .catch(e => {

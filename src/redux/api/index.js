@@ -17,7 +17,7 @@ module.exports = {
     return api.get(`dashboard?store_id=${STORE_ID}`);
   },
   getPastOrders: function(accessToken) {
-    return api.get(`order/all`, {
+    return api.get(`http://delivery.fleethunt.ca/v1/customer/orders`, {
       headers: {
         authorization: `Bearer ${accessToken}`
       }

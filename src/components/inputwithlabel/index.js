@@ -34,15 +34,13 @@ const InputWithLabel = ({
         borderBottomWidth: 1
       }}
     >
-      <Text>{prefix}</Text>
       <TextInput
         maxLength={maxLength}
         secureTextEntry={secureEntry}
         keyboardType={keyboardType}
         style={{
           paddingVertical: 10,
-          width: Metrics.FULL_WIDTH,
-          marginLeft: 10
+          width: Metrics.FULL_WIDTH
         }}
         onChangeText={text => onChangeText(text)}
         value={value}

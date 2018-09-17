@@ -39,6 +39,16 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     backgroundColor: Colors.REAL_WHITE,
     paddingTop: 20
+  },
+  addressCardWrapper: {
+    flexDirection: "row",
+    paddingVertical: 20
+  },
+  addressButtonsWrapper: {
+    flexDirection: "row",
+    paddingTop: 10,
+    justifyContent: "space-between",
+    maxWidth: "40%"
   }
 });
 

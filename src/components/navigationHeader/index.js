@@ -4,7 +4,7 @@ import { Colors } from "../../utils/constants";
 import Icon from "react-native-vector-icons/Ionicons";
 import styles from "./styles";
 
-const Header = ({ label, onLeft }) => (
+const Header = ({ label, onLeft, rightIcon }) => (
   <View style={styles.headerWrapper}>
     <TouchableOpacity
       onPress={() => {
@@ -20,9 +20,11 @@ const Header = ({ label, onLeft }) => (
     </TouchableOpacity>
 
     <Text style={styles.headerLabel}>{label}</Text>
-    <TouchableOpacity>
-      <Icon name="ios-search-outline" size={20} color={Colors.KINDA_BLACK} />
-    </TouchableOpacity>
+    {rightIcon ? (
+      <TouchableOpacity>
+        <Icon name="ios-search-outline" size={20} color={Colors.KINDA_BLACK} />
+      </TouchableOpacity>
+    ) : null}
   </View>
 );
 
