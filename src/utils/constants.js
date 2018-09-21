@@ -1,4 +1,4 @@
-import { Dimensions } from "react-native";
+import {Dimensions, StyleSheet} from "react-native";
 const window = Dimensions.get("window");
 
 export const Metrics = {
@@ -23,5 +23,7 @@ export const Colors = {
   BRAND_BLUE: "#95B5E1",
   KINDA_BLACK: "rgba(1,1,1,0.7)"
 };
+
+export const Styles = StyleSheet.create({HEADER_TEXT: {}, LABEL_TEXT: {}, SUB_TEXT: {}, TAB_ITEM: {}})
 
 export const IMAGE_PLACE_HOLDER = require("../assets/images/pizza_placeholder.png");

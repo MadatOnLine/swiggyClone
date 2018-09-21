@@ -6,7 +6,8 @@ import SquareButton from "../squarebutton";
 import { Field, reduxForm } from "redux-form";
 import { connect } from "react-redux";
 import idx from "idx";
-import { login } from "../../redux/actions";
+import { register } from "../../redux/actions";
+import Toast from "react-native-simple-toast";
 
 import KeyboardSpacer from "react-native-keyboard-spacer";
 
@@ -42,6 +43,8 @@ const FormTextInput = props => (
       if (props.onFocusCb) props.onFocusCb(ref);
     }}
     autoCorrect={false}
+    autoCorrect={props.autoCorrect}
+    autoCapitalize={props.autoCapitalize || "none"}
     onEndEditing={() => {
       if (props.onEndEditing) {
         props.onEndEditing();
@@ -58,22 +61,27 @@ const FormTextInput = props => (
   />
 );
 
-class LoginModal extends Component {
+class RegisterModal extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      alreadyRegistered: false,
+      message: props.errorMessage
+    };
   }
 
-  handleLogin = async () => {
+  handleRegister = async () => {
     const { formValues, hasError } = this.props;
-    let { mobilenumber, password } = formValues;
-    if (mobilenumber && password && !hasError) {
-      const res = await this.props.login({
+    let { mobilenumber, password, name, email } = formValues;
+    if (mobilenumber && password && name && email && !hasError) {
+      const res = await this.props.register({
         mobile_no: mobilenumber,
+        email,
+        name,
         password: password
       });
-      if (res && res.api_token) {
-        this.props.onLoginSuccess();
+      if (res && res.message) {
+        this.props.onRegisteredUserError(res.message);
       }
     }
   };
@@ -102,13 +110,33 @@ class LoginModal extends Component {
         >
           <Field
             component={FormTextInput}
+            name="name"
+            type="text"
+            label="Your Name"
+            prefix=""
+            value={this.props.formValues.name}
+            autoFocus
+            autoCapitalize="sentences"
+          />
+
+          <Field
+            component={FormTextInput}
             name="mobilenumber"
             type="text"
             label="Enter your 10 Digit mobile number"
             prefix="+91"
             value={this.props.formValues.mobilenumber}
             keyboardType="number-pad"
-            autoFocus
+          />
+
+          <Field
+            component={FormTextInput}
+            name="email"
+            type="text"
+            label="Email"
+            prefix=""
+            secureEntry={false}
+            value={this.props.formValues.email}
           />
 
           <Field
@@ -120,13 +148,14 @@ class LoginModal extends Component {
             secureEntry={true}
             value={this.props.formValues.password}
           />
+
           <SquareButton
             position="center"
             width={Metrics.FULL_WIDTH}
             color={Colors.BRAND_SAFFRON}
-            label="Login"
+            label="Register"
             inactive={hasError ? true : false}
-            onPress={this.handleLogin}
+            onPress={this.handleRegister}
           />
           <KeyboardSpacer />
         </View>
@@ -135,15 +164,15 @@ class LoginModal extends Component {
   }
 }
 
-const LoginModalForm = reduxForm({
-  form: "loginForm",
+const RegisterModalForm = reduxForm({
+  form: "registerForm",
   validate: validate
-})(LoginModal);
+})(RegisterModal);
 
 const mapStateToProps = state => {
-  let formValues = idx(state, _ => _.form.loginForm.values) || {};
-  let formErrors = idx(state, _ => _.form.loginForm.syncErrors) || "";
-  formErrors = formErrors;
+  let formValues = idx(state, _ => _.form.registerForm.values) || {};
+  let formErrors = idx(state, _ => _.form.registerForm.syncErrors) || "";
+
   return {
     formValues,
     hasError: formErrors ? true : false
@@ -152,5 +181,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { login }
-)(LoginModalForm);
+  { register }
+)(RegisterModalForm);

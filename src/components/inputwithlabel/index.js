@@ -5,11 +5,13 @@ import { Colors, Metrics } from "../../utils/constants";
 const InputWithLabel = ({
   prefix = "+91",
   keyboardType = "default",
-  maxLength = 10,
+  maxLength = 30,
   label = "text label",
   secureEntry = false,
   value,
-  onChangeText
+  onChangeText,
+  autoFocus,
+  autoCapitalize
 }) => (
   <View
     style={{
@@ -44,6 +46,8 @@ const InputWithLabel = ({
         }}
         onChangeText={text => onChangeText(text)}
         value={value}
+        autoFocus={autoFocus}
+        autoCapitalize={autoCapitalize}
       />
     </View>
   </View>

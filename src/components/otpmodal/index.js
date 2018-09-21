@@ -58,7 +58,7 @@ const FormTextInput = props => (
   />
 );
 
-class LoginModal extends Component {
+class OTPModal extends Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -113,9 +113,9 @@ class LoginModal extends Component {
 
           <Field
             component={FormTextInput}
-            name="password"
+            name="otp"
             type="text"
-            label="Password"
+            label="OTP"
             prefix=""
             secureEntry={true}
             value={this.props.formValues.password}
@@ -124,7 +124,7 @@ class LoginModal extends Component {
             position="center"
             width={Metrics.FULL_WIDTH}
             color={Colors.BRAND_SAFFRON}
-            label="Login"
+            label="Proceed"
             inactive={hasError ? true : false}
             onPress={this.handleLogin}
           />
@@ -135,10 +135,10 @@ class LoginModal extends Component {
   }
 }
 
-const LoginModalForm = reduxForm({
-  form: "loginForm",
+const OTPModalForm = reduxForm({
+  form: "otpform",
   validate: validate
-})(LoginModal);
+})(OTPModal);
 
 const mapStateToProps = state => {
   let formValues = idx(state, _ => _.form.loginForm.values) || {};
@@ -153,4 +153,4 @@ const mapStateToProps = state => {
 export default connect(
   mapStateToProps,
   { login }
-)(LoginModalForm);
+)(OTPModalForm);

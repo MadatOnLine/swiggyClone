@@ -55,7 +55,6 @@ class Explore extends Component {
           flex: 1,
           backgroundColor: Colors.SCREEN_WHITE,
           paddingTop: 25
-          // paddingHorizontal: 10
         }}
       >
         <SearchBar onPress={() => this.setState({ searching: true })} />

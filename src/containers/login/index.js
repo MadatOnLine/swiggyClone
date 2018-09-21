@@ -1,11 +1,20 @@
 import React, { Component } from "react";
-import { Text, View, Modal, Image, TouchableOpacity } from "react-native";
+import {
+  Text,
+  View,
+  Modal,
+  Image,
+  TouchableOpacity,
+  Alert
+} from "react-native";
 
 import { Metrics, Colors } from "../../utils/constants";
 import LoginModal from "../../components/loginmodal";
+import RegisterModal from "../../components/registerModal";
+
 import SquareButton from "../../components/squarebutton";
 
-const LoginButton = ({ onLoginClick }) => (
+const LoginButton = ({ onLoginClick, onRegisterClick }) => (
   <View
     style={{
       height: Metrics.FULL_HEIGHT * 0.4,
@@ -15,7 +24,7 @@ const LoginButton = ({ onLoginClick }) => (
     }}
   >
     <Text>Order from wide range of pizzas</Text>
-    <SquareButton label="Register" />
+    <SquareButton label="Register" onPress={onRegisterClick} />
 
     <View
       style={{
@@ -43,13 +52,21 @@ export class LoginScreen extends Component {
   constructor() {
     super();
     this.state = {
-      showLoginModal: false
+      showLoginModal: false,
+      showRegisterModal: false,
+      showOTPModal: false
     };
   }
 
   onLoginClick = () => {
     this.setState({
       showLoginModal: true
+    });
+  };
+
+  onRegisterClick = () => {
+    this.setState({
+      showRegisterModal: true
     });
   };
 
@@ -62,8 +79,43 @@ export class LoginScreen extends Component {
     );
   };
 
+  onRegisterSuccess = cb => {};
+
+  onRegisteredUserError = message => {
+    this.setState(
+      {
+        showRegisterModal: false
+      },
+      () => {
+        setTimeout(() => {
+          Alert.alert(
+            "SORRY",
+            message,
+            [
+              {
+                text: "Cancel",
+                onPress: () => console.log("Cancel Pressed"),
+                style: "cancel"
+              },
+              { text: "OK", onPress: () => console.log("OK Pressed") }
+            ],
+            { cancelable: false }
+          );
+        }, 1000);
+      }
+    );
+  };
+
+  dismissModal = () => {
+    this.setState({
+      showLoginModal: false,
+      showOTPModal: false,
+      showRegisterModal: false
+    });
+  };
+
   render() {
-    const { showLoginModal } = this.state;
+    const { showLoginModal, showRegisterModal } = this.state;
     return (
       <View>
         <View
@@ -81,19 +133,30 @@ export class LoginScreen extends Component {
           />
         </View>
 
-        <LoginButton onLoginClick={this.onLoginClick} />
+        <LoginButton
+          onLoginClick={this.onLoginClick}
+          onRegisterClick={this.onRegisterClick}
+        />
         <Modal
           visible={showLoginModal}
           transparent={true}
           animationType="slide"
         >
           <LoginModal
-            dismissModal={() =>
-              this.setState({
-                showLoginModal: false
-              })
-            }
+            dismissModal={this.dismissModal}
             onLoginSuccess={this.onLoginSuccess}
+          />
+        </Modal>
+
+        <Modal
+          visible={showRegisterModal}
+          transparent={true}
+          animationType="slide"
+        >
+          <RegisterModal
+            dismissModal={this.dismissModal}
+            onRegisterSuccess={this.onRegisterSuccess}
+            onRegisteredUserError={this.onRegisteredUserError}
           />
         </Modal>
       </View>

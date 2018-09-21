@@ -5,38 +5,16 @@ import { connect } from "react-redux";
 import idx from "idx";
 import { getCartItemCount } from "../../utils/helpers";
 
+import styles from "./styles";
+
 export class CartIcon extends Component {
   render() {
     const { name, cartItemCount } = this.props;
     return (
-      <View
-        style={{
-          justifyContent: "center",
-          alignItems: "center"
-        }}
-      >
+      <View style={styles.cartIconWrapper}>
         {cartItemCount && cartItemCount > 0 ? (
-          <View
-            style={{
-              width: 15,
-              height: 15,
-              borderRadius: 15 / 2,
-              backgroundColor: "red",
-              left: 9,
-              top: 4,
-              justifyContent: "center",
-              alignItems: "center"
-            }}
-          >
-            <Text
-              style={{
-                fontSize: 9,
-                color: "white",
-                fontWeight: "500"
-              }}
-            >
-              {cartItemCount}
-            </Text>
+          <View style={styles.countWrapper}>
+            <Text style={styles.count}>{cartItemCount}</Text>
           </View>
         ) : null}
         <Icon name={name} />

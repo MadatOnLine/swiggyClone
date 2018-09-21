@@ -6,32 +6,28 @@ import { connect } from "react-redux";
 
 import Header from "../../components/navigationHeader";
 import Empty from "../../components/emptyComponent";
+import styles from "./styles";
 
 import { addToCart } from "../../redux/actions";
 
 const NONVEG = ({ is_non_veg }) => (
   <View
-    style={{
-      width: 15,
-      height: 15,
-      backgroundColor: "transparent",
-      borderColor: is_non_veg === 0 ? Colors.BRAND_GREEN : Colors.BRAND_RED,
-      borderWidth: 1,
-      justifyContent: "center",
-      alignItems: "center",
-      marginHorizontal: 5
-    }}
+    style={[
+      styles.nonVegWrapper,
+      {
+        borderColor: is_non_veg === 0 ? Colors.BRAND_GREEN : Colors.BRAND_RED
+      }
+    ]}
   >
     <View
-      style={{
-        width: 10,
-        height: 10,
-        borderRadius: 10 / 2,
-        backgroundColor:
-          is_non_veg === 0 ? Colors.BRAND_GREEN : Colors.BRAND_RED,
-        borderColor: is_non_veg === 0 ? Colors.BRAND_GREEN : Colors.BRAND_RED,
-        borderWidth: 1
-      }}
+      style={[
+        styles.nonvegItem,
+        {
+          backgroundColor:
+            is_non_veg === 0 ? Colors.BRAND_GREEN : Colors.BRAND_RED,
+          borderColor: is_non_veg === 0 ? Colors.BRAND_GREEN : Colors.BRAND_RED
+        }
+      ]}
     />
   </View>
 );
@@ -40,25 +36,9 @@ const AddToCartButton = ({ onPress }) => (
   <TouchableHighlight
     onPress={onPress}
     underlayColor="transparent"
-    style={{
-      width: 60,
-      height: 25,
-      borderColor: Colors.BRAND_GREEN,
-      borderWidth: 1,
-      justifyContent: "center",
-      alignItems: "center",
-      marginHorizontal: 10
-    }}
+    style={styles.addToCartButton}
   >
-    <Text
-      style={{
-        fontSize: 10,
-        color: Colors.BRAND_GREEN,
-        fontWeight: "600"
-      }}
-    >
-      ADD
-    </Text>
+    <Text style={styles.addToCartButtonText}>ADD</Text>
   </TouchableHighlight>
 );
 
@@ -69,21 +49,10 @@ const CategorySection = ({
   selling_price,
   onAddToCart
 }) => (
-  <View
-    style={{
-      flexDirection: "row",
-      alignItems: "center",
-      paddingVertical: 10
-    }}
-  >
+  <View style={styles.categoryItemWrapper}>
     <NONVEG is_non_veg={is_non_veg} />
 
-    <View
-      style={{
-        flex: 1,
-        marginHorizontal: 10
-      }}
-    >
+    <View style={styles.titleWrapper}>
       <Text
         style={{
           paddingBottom: 5
@@ -91,15 +60,7 @@ const CategorySection = ({
       >
         {title}
       </Text>
-      <Text
-        style={{
-          fontSize: 12,
-          color: Colors.TEXT_LABEL_GREY,
-          paddingBottom: 5
-        }}
-      >
-        {subtitle}
-      </Text>
+      <Text style={styles.subtitleText}>{subtitle}</Text>
       <Text>{selling_price}</Text>
     </View>
 

@@ -7,17 +7,12 @@ import styles from "./styles";
 const foodimage = require("../../assets/images/pizza_placeholder.png");
 export class Categories extends Component {
   render() {
-    const { title, dataSource, onItemClick } = this.props;
+    const { title, dataSource, onItemClick, onTitleClick } = this.props;
     return (
       <View style={styles.container}>
-        <Text
-          style={{
-            fontSize: 18,
-            fontWeight: "500"
-          }}
-        >
-          {title}
-        </Text>
+        <TouchableHighlight onPress={onTitleClick} underlayColor="transparent">
+          <Text style={styles.title}>{title}</Text>
+        </TouchableHighlight>
         <View style={styles.grid}>
           {dataSource && dataSource.length > 0
             ? dataSource.map(itm => (

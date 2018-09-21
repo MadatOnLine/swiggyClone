@@ -1,11 +1,11 @@
 import React, { Component } from "react";
-import { Text, View, Image } from "react-native";
+import { View, Image } from "react-native";
 
 import { connect } from "react-redux";
 
 import styles from "./styles";
 import idx from "idx";
-const splashimage = require("../../assets/images/pembina1024.png");
+const SPLASH_IMAGE = require("../../assets/images/pembina1024.png");
 
 export class SplashScreen extends Component {
   componentDidMount() {
@@ -21,7 +21,7 @@ export class SplashScreen extends Component {
   render() {
     return (
       <View style={styles.wrapper}>
-        <Image style={styles.image} source={splashimage} />
+        <Image style={styles.image} source={SPLASH_IMAGE} />
       </View>
     );
   }

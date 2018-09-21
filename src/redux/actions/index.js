@@ -3,6 +3,9 @@ import {
   LOGIN_FAILED,
   LOGIN_REQUEST,
   LOGIN_SUCCESSFUL,
+  REGISTER_REQUEST,
+  REGISTER_SUCCESSFUL,
+  REGISTER_FAILED,
   GET_DASH_BOARD_FAILED,
   GET_DASH_BOARD_REQUEST,
   GET_DASH_BOARD_SUCCESSFUL,
@@ -17,7 +20,10 @@ import {
   GET_CATEGORY_ITEMS_REQUEST,
   GET_CATEGORY_ITEMS_SUCCESSFUL,
   GET_CATEGORY_ITEMS_FAILED,
-  SELECT_ADDRESS_FOR_DELIVERY
+  SELECT_ADDRESS_FOR_DELIVERY,
+  GET_ALL_CATEGORIES_REQUEST,
+  GET_ALL_CATEGORIES_SUCCESSFUL,
+  GET_ALL_CATEGORIES_FAILED
 } from "../constants";
 export const login = params => {
   return dispatch => {
@@ -37,6 +43,32 @@ export const login = params => {
         .catch(e => {
           dispatch({
             type: LOGIN_FAILED,
+            payload: e
+          });
+          reject(e);
+        });
+    });
+  };
+};
+
+export const register = params => {
+  return dispatch => {
+    return new Promise((resolve, reject) => {
+      dispatch({ type: REGISTER_REQUEST });
+      return api
+        .register(params)
+        .then(response => {
+          if (response && response.data) {
+            dispatch({
+              type: REGISTER_SUCCESSFUL,
+              payload: response.data
+            });
+            resolve(response.data);
+          }
+        })
+        .catch(e => {
+          dispatch({
+            type: REGISTER_FAILED,
             payload: e
           });
           reject(e);
@@ -155,6 +187,32 @@ export const getCategoryItemsById = (id, accessToken) => {
         .catch(e => {
           dispatch({
             type: GET_CATEGORY_ITEMS_FAILED,
+            payload: e
+          });
+          reject(e);
+        });
+    });
+  };
+};
+
+export const getAllCategories = accessToken => {
+  return dispatch => {
+    return new Promise((resolve, reject) => {
+      dispatch({ type: GET_ALL_CATEGORIES_REQUEST });
+      return api
+        .getAllCategories(accessToken)
+        .then(response => {
+          if (response && response.data && response.data.categories) {
+            dispatch({
+              type: GET_ALL_CATEGORIES_SUCCESSFUL,
+              payload: response.data.categories
+            });
+            resolve(response.data);
+          }
+        })
+        .catch(e => {
+          dispatch({
+            type: GET_ALL_CATEGORIES_FAILED,
             payload: e
           });
           reject(e);

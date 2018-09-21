@@ -6,7 +6,8 @@ import {
   getDashboardData,
   addToCart,
   removeItemFromCart,
-  getCategoryItemsById
+  getCategoryItemsById,
+  getAllCategories
 } from "../../redux/actions";
 
 import ImageSlider from "../../components/imageslider";
@@ -91,8 +92,15 @@ export class Home extends Component {
   };
 
   onCategoryItemClick = async item => {
-    await this.props.getCategoryItemsById(item.id);
+    const { api_token } = this.props;
+    await this.props.getCategoryItemsById(item.id, api_token);
     this.props.navigation.navigate("CategoryDetail", { item: item });
+  };
+
+  onCategoryTitleClick = async item => {
+    const { api_token } = this.props;
+    const res = await this.props.getAllCategories(api_token);
+    this.props.navigation.navigate("Categories");
   };
 
   render() {
@@ -118,6 +126,7 @@ export class Home extends Component {
             title="Categories"
             dataSource={categories}
             onItemClick={this.onCategoryItemClick}
+            onTitleClick={this.onCategoryTitleClick}
           />
           <ImageGrid
             title="Best Sellers"
@@ -147,5 +156,11 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { getDashboardData, addToCart, removeItemFromCart, getCategoryItemsById }
+  {
+    getDashboardData,
+    addToCart,
+    removeItemFromCart,
+    getCategoryItemsById,
+    getAllCategories
+  }
 )(Home);
