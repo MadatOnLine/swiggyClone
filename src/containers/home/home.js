@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Text, View, ScrollView } from "react-native";
+import { Text, View, ScrollView, Modal } from "react-native";
 import { connect } from "react-redux";
 
 import {
@@ -145,12 +145,14 @@ const mapStateToProps = state => {
   let products = idx(state, _ => _.dashboard.data.products) || [];
   let api_token = idx(state, _ => _.user.api_token) || "";
   let selectedAddress = idx(state, _ => _.addresses.selectedAddress);
+  let promises = idx(state, _ => _.promises.IN_PROGRESS);
   return {
     categories,
     offers,
     products,
     selectedAddress,
-    api_token
+    api_token,
+    promises
   };
 };
 

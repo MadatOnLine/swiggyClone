@@ -1,111 +1,60 @@
 import React, { Component } from "react";
-import { View, StyleSheet, Text } from "react-native";
-import { TabViewAnimated, TabBar } from "react-native-tab-view";
+import { View, ScrollView, Text } from "react-native";
+import Categories from "../../components/categories";
+import idx from "idx";
+import { connect } from "react-redux";
+import { Colors } from "../../utils/constants";
+import Header from "../../components/navigationHeader";
+import { withNavigation } from "react-navigation";
+import { getCategoryItemsById } from "../../redux/actions";
+import TabbedCategories from "./TabbedCategories";
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    marginTop: 20
-  },
-  tabbar: {
-    backgroundColor: "#222"
-  },
-  page: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center"
-  },
-  indicator: {
-    backgroundColor: "#ffeb3b"
-  },
-  label: {
-    color: "#fff",
-    fontWeight: "400"
-  }
-});
+const SHOW_GRID = false;
 
-export default class DynamicExample extends Component {
-  static title = "Dynamic tab load";
-  static appbarElevation = 0;
-
-  // static propTypes = {
-  //   style: View.propTypes.style
-  // };
-
-  state = {
-    index: 0,
-    routes: [],
-    loading: true,
-    data: {}
+export class AllCategories extends Component {
+  onCategoryItemClick = async item => {
+    const { api_token } = this.props;
+    await this.props.getCategoryItemsById(item.id, api_token);
+    this.props.navigation.navigate("CategoryDetail", { item: item });
   };
-
-  componentDidMount() {
-    fetch("https://facebook.github.io/react-native/movies.json")
-      .then(response => response.json())
-      .then(responseJson => {
-        const routes = [];
-        responseJson.movies.forEach(movie => {
-          routes.push({
-            title: movie.title,
-            key: movie.releaseYear
-          });
-        });
-
-        this.setState({
-          data: responseJson,
-          routes,
-          loading: false
-        });
-      });
-  }
-
-  _handleChangeTab = index => {
-    this.setState({ index });
-  };
-
-  _renderHeader = props => {
-    return (
-      <TabBar
-        {...props}
-        scrollEnabled
-        indicatorStyle={styles.indicator}
-        style={styles.tabbar}
-        labelStyle={styles.label}
-      />
-    );
-  };
-
-  _renderScene = ({ route }) => {
-    return (
-      <View style={[styles.page, { backgroundColor: "#673ab7" }]}>
-        <Text>
-          {route.key} - {route.title}
-        </Text>
-      </View>
-    );
-  };
-
-  renderScreen() {
-    if (this.state.loading) {
-      return (
-        <View>
-          <Text>Loading...</Text>
-        </View>
-      );
-    } else {
-      return (
-        <TabViewAnimated
-          style={styles.container}
-          navigationState={this.state}
-          renderScene={this._renderScene}
-          renderHeader={this._renderHeader}
-          onRequestChangeTab={this._handleChangeTab}
-        />
-      );
-    }
-  }
 
   render() {
-    return <View style={styles.container}>{this.renderScreen()}</View>;
+    return (
+      <View
+        style={{
+          flex: 1,
+          backgroundColor: Colors.REAL_WHITE,
+          paddingTop: 25
+        }}
+      >
+        <Header label="Categories" onLeft={this.props.navigation.pop} />
+        {SHOW_GRID ? (
+          <ScrollView showsVerticalScrollIndicator={false}>
+            <Categories
+              dataSource={this.props.categories}
+              onItemClick={this.onCategoryItemClick}
+            />
+          </ScrollView>
+        ) : (
+          <TabbedCategories dataSource={this.props.categories} />
+        )}
+      </View>
+    );
   }
 }
+
+const mapStateToProps = state => {
+  let categories = idx(state, _ => _.allCategories) || [];
+  let api_token = idx(state, _ => _.user.api_token) || "";
+  return {
+    categories,
+    api_token
+  };
+};
+
+const _Categories = withNavigation(AllCategories);
+
+export default connect(
+  mapStateToProps,
+  { getCategoryItemsById }
+)(_Categories);

@@ -17,6 +17,7 @@
     "react": "16.4.1",
     "react-native": "0.56.0",
     "react-native-global-font": "^1.0.2",
+    "react-native-indicators": "^0.13.0",
     "react-native-input-scroll-view": "^1.6.5",
     "react-native-keyboard-spacer": "^0.4.1",
     "react-native-simple-toast": "0.0.8",
