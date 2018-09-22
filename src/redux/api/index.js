@@ -36,6 +36,31 @@ module.exports = {
       }
     });
   },
+  saveAddress: function(accessToken, params) {
+    return api.post(
+      `http://delivery.fleethunt.ca/v1/customer/addresses`,
+      params,
+      {
+        headers: {
+          authorization: `Bearer ${accessToken}`
+        }
+      }
+    );
+  },
+  editAddress: function(accessToken, id, params) {
+    return api.put(`customer/addresses`, params, {
+      headers: {
+        authorization: `Bearer ${accessToken}`
+      }
+    });
+  },
+  deleteAddress: function(accessToken, id) {
+    return api.delete(`customer/addresses/${id}`, {
+      headers: {
+        authorization: `Bearer ${accessToken}`
+      }
+    });
+  },
   getCategoryItems: function(categoryId, accessToken) {
     return api.get(
       `category/items?category_id=${categoryId}&store_id=${STORE_ID}&offset=0&page_size=25`,

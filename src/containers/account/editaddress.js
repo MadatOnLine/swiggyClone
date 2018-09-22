@@ -81,8 +81,9 @@ const Address = ({ address, type, landmark, locality, onEdit }) => (
   </View>
 );
 
-const AddNewAddressButton = () => (
-  <View
+const AddNewAddressButton = ({ onPress }) => (
+  <TouchableOpacity
+    onPress={onPress}
     style={{
       borderColor: Colors.BRAND_GREEN,
       borderWidth: 1,
@@ -101,7 +102,7 @@ const AddNewAddressButton = () => (
     >
       ADD NEW ADDRESS
     </Text>
-  </View>
+  </TouchableOpacity>
 );
 
 class EditAddress extends Component {
@@ -131,6 +132,10 @@ class EditAddress extends Component {
     });
   };
 
+  onAddNewAddress = () => {
+    this.props.navigation.navigate("SetAddress");
+  };
+
   render() {
     const { myAddresses } = this.state;
     return (
@@ -154,7 +159,7 @@ class EditAddress extends Component {
           }}
         >
           <SavedAddressesHeader />
-          <AddNewAddressButton />
+          <AddNewAddressButton onPress={this.onAddNewAddress} />
         </View>
 
         <FlatList

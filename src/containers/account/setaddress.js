@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Text, View, TouchableOpacity } from "react-native";
+import { Text, View, TouchableOpacity, Geolocation } from "react-native";
 import Header from "../../components/navigationHeader";
 import { Colors } from "../../utils/constants";
 import Input from "../../components/inputwithlabel";
@@ -8,6 +8,8 @@ import Icon from "react-native-vector-icons/Ionicons";
 import { connect } from "react-redux";
 import idx from "idx";
 import ScrollView from "react-native-input-scroll-view";
+import { saveAddress, updateAddress } from "../../redux/actions";
+import { validateAddress } from "../../utils/helpers";
 
 const FormTextInput = props => (
   <Input
@@ -50,7 +52,8 @@ const AddressItem = ({ label, icon, selected, onSelectAddressType }) => (
     onPress={onSelectAddressType}
     style={{
       borderBottomColor: Colors.BRAND_SAFFRON,
-      borderBottomWidth: selected === label ? 2 : 0,
+      borderBottomWidth:
+        String(selected).toLowerCase() === String(label).toLowerCase() ? 2 : 0,
       maxWidth: "70%",
       paddingBottom: 5,
       flexDirection: "row",
@@ -132,8 +135,9 @@ const AddressTypeSelector = ({ onSelectAddressType, selectedAddressType }) => (
   </View>
 );
 
-const SaveButton = () => (
-  <View
+const SaveButton = ({ onSave }) => (
+  <TouchableOpacity
+    onPress={onSave}
     style={{
       backgroundColor: Colors.BRAND_SAFFRON,
       justifyContent: "center",
@@ -149,7 +153,7 @@ const SaveButton = () => (
     >
       SAVE AND PROCEED
     </Text>
-  </View>
+  </TouchableOpacity>
 );
 
 class SetAddress extends Component {
@@ -160,10 +164,97 @@ class SetAddress extends Component {
     };
   }
 
+  componentWillMount() {
+    let {
+      address = "",
+      id,
+      landmark = "",
+      locality = "",
+      mobile_no = "",
+      name = "",
+      type = "",
+      location = ""
+    } = idx(this.props, _ => _.navigation.state.params.data) || {};
+
+    if (type) {
+      this.setState({
+        selectedAddressType: type
+      });
+    }
+
+    if (location) {
+      this.props.change("location", location);
+    }
+
+    if (address) {
+      this.props.change("address_1", address);
+    }
+
+    if (landmark) {
+      this.props.change("landmark", landmark || "");
+    }
+  }
+
+  componentDidMount() {
+    navigator.geolocation.getCurrentPosition(
+      position => {
+        debugger;
+
+        let { latitude, longitude } = idx(position, _ => _.coords) || {};
+
+        if (latitude) {
+          this.props.change("latitude", latitude);
+        }
+
+        if (longitude) {
+          this.props.change("longitude", longitude);
+        }
+      },
+      error => this.setState({ error: error.message }),
+      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
+    );
+  }
+
   onSelectAddressType = type => {
     this.setState({
       selectedAddressType: type
     });
+  };
+
+  saveAddress = async () => {
+    debugger;
+
+    let { api_token } = this.props;
+    let { location, address_1, landmark, name } =
+      idx(this.props, _ => _.formValues) || {};
+    let { selectedAddressType } = this.state;
+
+    let { id } = idx(this.props, _ => _.navigation.state.params.data) || {};
+
+    if (id) {
+      let params = {};
+
+      if (location) {
+        params.location = location;
+      }
+
+      if (address_1) {
+        params.address = address_1;
+      }
+
+      if (landmark) {
+        params.landmark = landmark;
+      }
+
+      const res = await this.props.updateAddress(api_token, id, params);
+      if (res) {
+        this.props.navigation.pop();
+      } else {
+        alert("error");
+      }
+    } else {
+      console.log("New");
+    }
   };
 
   render() {
@@ -228,7 +319,7 @@ class SetAddress extends Component {
             onSelectAddressType={this.onSelectAddressType}
           />
 
-          <SaveButton />
+          <SaveButton onSave={this.saveAddress} />
         </ScrollView>
       </View>
     );
@@ -236,17 +327,20 @@ class SetAddress extends Component {
 }
 
 const form = reduxForm({
-  form: "editaddress"
+  form: "editaddress",
+  validate: validateAddress
 })(SetAddress);
 
 const mapStateToProps = state => {
   let formValues = idx(state, _ => _.form.editaddress.values) || {};
+  let api_token = idx(state, _ => _.user.api_token) || "";
   return {
-    formValues
+    formValues,
+    api_token
   };
 };
 
 export default connect(
   mapStateToProps,
-  null
+  { saveAddress, updateAddress }
 )(form);

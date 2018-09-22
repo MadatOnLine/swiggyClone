@@ -23,7 +23,16 @@ import {
   SELECT_ADDRESS_FOR_DELIVERY,
   GET_ALL_CATEGORIES_REQUEST,
   GET_ALL_CATEGORIES_SUCCESSFUL,
-  GET_ALL_CATEGORIES_FAILED
+  GET_ALL_CATEGORIES_FAILED,
+  SAVE_NEW_ADDRESS_FAILED,
+  SAVE_NEW_ADDRESS_REQUEST,
+  SAVE_NEW_ADDRESS_SUCCESSFUL,
+  UPDATE_ADDRESS_REQUEST,
+  UPDATE_ADDRESS_SUCCESSFUL,
+  UPDATE_ADDRESS_FAILED,
+  DELETE_ADDRESS_REQUEST,
+  DELETE_ADDRESS_SUCCESSFUL,
+  DELETE_ADDRESS_FAILED
 } from "../constants";
 export const login = params => {
   return dispatch => {
@@ -213,6 +222,84 @@ export const getAllCategories = accessToken => {
         .catch(e => {
           dispatch({
             type: GET_ALL_CATEGORIES_FAILED,
+            payload: e
+          });
+          reject(e);
+        });
+    });
+  };
+};
+
+export const saveAddress = (accessToken, address) => {
+  return dispatch => {
+    return new Promise((resolve, reject) => {
+      dispatch({ type: SAVE_NEW_ADDRESS_REQUEST });
+      return api
+        .saveAddress(accessToken, address)
+        .then(response => {
+          if (response && response.data) {
+            dispatch({
+              type: SAVE_NEW_ADDRESS_SUCCESSFUL,
+              payload: response.data
+            });
+            resolve(response.data);
+          }
+        })
+        .catch(e => {
+          dispatch({
+            type: SAVE_NEW_ADDRESS_FAILED,
+            payload: e
+          });
+          reject(e);
+        });
+    });
+  };
+};
+
+export const updateAddress = (accessToken, addressId, address) => {
+  return dispatch => {
+    return new Promise((resolve, reject) => {
+      dispatch({ type: UPDATE_ADDRESS_REQUEST });
+      return api
+        .editAddress(accessToken, addressId, address)
+        .then(response => {
+          if (response && response.data) {
+            dispatch({
+              type: UPDATE_ADDRESS_SUCCESSFUL,
+              payload: response.data
+            });
+            resolve(response.data);
+          }
+        })
+        .catch(e => {
+          dispatch({
+            type: UPDATE_ADDRESS_FAILED,
+            payload: e
+          });
+          reject(e);
+        });
+    });
+  };
+};
+
+export const deleteAddress = (accessToken, addressId) => {
+  return dispatch => {
+    return new Promise((resolve, reject) => {
+      dispatch({ type: DELETE_ADDRESS_REQUEST });
+      return api
+        .deleteAddress(accessToken, addressId)
+        .then(response => {
+          if (response) {
+            dispatch({
+              type: DELETE_ADDRESS_SUCCESSFUL,
+              payload: response.data
+            });
+            resolve(response);
+          }
+        })
+        .catch(e => {
+          dispatch({
+            type: DELETE_ADDRESS_FAILED,
             payload: e
           });
           reject(e);

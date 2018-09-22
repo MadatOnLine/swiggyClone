@@ -29,7 +29,6 @@ class Main extends Component {
             }}
           >
             <SkypeIndicator color={Colors.BRAND_GREEN} size={40} />
-            <Text>Please Wait</Text>
           </View>
         </Modal>
       </View>
