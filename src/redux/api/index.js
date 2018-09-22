@@ -80,5 +80,15 @@ module.exports = {
         }
       }
     );
+  },
+  trackOrder: function(accessToken, runnerId) {
+    return api.get(
+      `http://delivery.fleethunt.ca/v1/customer/orders/track?runner_id=${runnerId}`,
+      {
+        headers: {
+          authorization: `Bearer ${accessToken}`
+        }
+      }
+    );
   }
 };

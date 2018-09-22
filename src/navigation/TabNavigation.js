@@ -14,7 +14,7 @@ export default createBottomTabNavigator({
     navigationOptions: () => ({
       title: `Near You`,
       headerBackTitle: null,
-      tabBarIcon: props => <Icon name="ios-compass-outline" />
+      tabBarIcon: props => <Icon name="ios-compass-outline" size={25} />
     })
   },
   Explore: {
@@ -22,7 +22,7 @@ export default createBottomTabNavigator({
     navigationOptions: () => ({
       title: `Explore`,
       headerBackTitle: null,
-      tabBarIcon: props => <Icon name="ios-search-outline" />
+      tabBarIcon: props => <Icon name="ios-search-outline" size={25} />
     })
   },
   Cart: {
@@ -30,7 +30,7 @@ export default createBottomTabNavigator({
     navigationOptions: () => ({
       title: `Cart`,
       headerBackTitle: null,
-      tabBarIcon: props => <CartIcon name="ios-cart-outline" />
+      tabBarIcon: props => <CartIcon name="ios-cart-outline" size={25} />
     })
   },
   Account: {
@@ -38,7 +38,7 @@ export default createBottomTabNavigator({
     navigationOptions: () => ({
       title: `Account`,
       headerBackTitle: null,
-      tabBarIcon: props => <Icon name="ios-person-outline" />
+      tabBarIcon: props => <Icon name="ios-person-outline" size={25} />
     })
   }
 });

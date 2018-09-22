@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { View, Text, FlatList, TouchableHighlight } from "react-native";
-import { Colors } from "../../utils/constants";
+import { View, Text, FlatList, TouchableHighlight, Modal } from "react-native";
+import { Colors, Metrics } from "../../utils/constants";
 import idx from "idx";
 import { connect } from "react-redux";
 
@@ -68,15 +68,56 @@ const CategorySection = ({
   </View>
 );
 
+const AddOnItem = ({
+  is_non_veg = false,
+  display_name,
+  subtitle,
+  price,
+  onAddToCart
+}) => (
+  <View style={styles.categoryItemWrapper}>
+    <NONVEG is_non_veg={is_non_veg} />
+
+    <View style={styles.titleWrapper}>
+      <Text
+        style={{
+          paddingBottom: 5
+        }}
+      >
+        {display_name}
+      </Text>
+      <Text style={styles.subtitleText}>{subtitle}</Text>
+      <Text>{price}</Text>
+    </View>
+
+    <AddToCartButton onPress={onAddToCart} />
+  </View>
+);
+
 const EmptySection = () => <View />;
 
 class CategoryDetail extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      addonModal: false,
+      addons: []
+    };
   }
 
   goBack = () => this.props.navigation.pop();
+
+  handleAddToCart = item => {
+    debugger;
+    if (item && item.product_addons && item.product_addons.length > 0) {
+      this.setState({
+        addonModal: true,
+        addons: item.product_addons
+      });
+    } else {
+      this.props.addToCart(item);
+    }
+  };
 
   render() {
     let categoryItem = idx(this.props, _ => _.navigation.state.params.item);
@@ -110,11 +151,57 @@ class CategoryDetail extends Component {
           renderItem={({ item }) => (
             <CategorySection
               {...item}
-              onAddToCart={() => this.props.addToCart(item)}
+              onAddToCart={() => this.handleAddToCart(item)}
             />
           )}
           keyExtractor={item => String(item.id)}
         />
+
+        <Modal visible={this.state.addonModal} transparent={true}>
+          <View
+            style={{
+              flex: 1,
+              backgroundColor: "rgba(1,1,1,0.1)",
+              justifyContent: "center",
+              alignItems: "center"
+            }}
+          >
+            <View
+              style={{
+                width: Metrics.FULL_WIDTH * 0.95,
+                minHeight: 180,
+                maxHeight: Metrics.FULL_HEIGHT * 0.8,
+                backgroundColor: Colors.REAL_WHITE
+              }}
+            >
+              <FlatList
+                contentContainerStyle={
+                  categoryItems.length < 1
+                    ? {
+                        justifyContent: "center",
+                        alignItems: "center",
+                        flex: 1
+                      }
+                    : {
+                        paddingHorizontal: 10,
+                        paddingTop: 10
+                      }
+                }
+                data={this.state.addons}
+                ListEmptyComponent={() => (
+                  <Empty message="Sorry ! We could not find what you are looking for" />
+                )}
+                renderItem={({ item }) => (
+                  <AddOnItem
+                    {...item}
+                    onAddToCart={() => this.handleAddToCart(item)}
+                  />
+                )}
+                keyExtractor={item => String(item.id)}
+              />
+            </View>
+          </View>
+        </Modal>
       </View>
     );
   }

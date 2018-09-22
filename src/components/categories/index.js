@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Text, View, Image, TouchableHighlight } from "react-native";
 
-import { Metrics } from "../../utils/constants";
 import styles from "./styles";
 
 const foodimage = require("../../assets/images/pizza_placeholder.png");

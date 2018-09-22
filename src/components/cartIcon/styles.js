@@ -10,8 +10,8 @@ const styles = StyleSheet.create({
     height: 15,
     borderRadius: 15 / 2,
     backgroundColor: "red",
-    left: 9,
-    top: 4,
+    left: 12,
+    top: 10,
     justifyContent: "center",
     alignItems: "center"
   },

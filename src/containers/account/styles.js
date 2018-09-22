@@ -18,8 +18,9 @@ const styles = StyleSheet.create({
   },
   orderedItems: {
     fontWeight: "300",
-    fontSize: 12,
-    color: Colors.TEXT_LABEL_GREY
+    fontSize: 16,
+    paddingBottom: 10,
+    color: Colors.KINDA_BLACK
   },
   reOrderButton: {
     borderWidth: 2,

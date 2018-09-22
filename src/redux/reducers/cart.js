@@ -8,13 +8,13 @@ export default (state = initialState, action) => {
     case ADD_ITEM_TO_CART:
       var index = state.findIndex(i => i.id === action.payload.id);
       if (index < 0) {
-        Toast.show(`Added ${action.payload.title} to the cart`, Toast.SHORT);
+        // Toast.show(`Added ${action.payload.title} to the cart`, Toast.SHORT);
         return ip.push(state, ip.assocIn(action.payload, ["count"], 1));
       } else {
-        Toast.show(
-          `Added one more ${action.payload.title} to the cart`,
-          Toast.SHORT
-        );
+        // Toast.show(
+        //   `Added one more ${action.payload.title} to the cart`,
+        //   Toast.SHORT
+        // );
         return ip.updateIn(state, [index, "count"], val => val + 1);
       }
 

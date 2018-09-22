@@ -16,11 +16,12 @@ const Map = ({
   latitude = LATITUDE,
   longitude = LONGITUDE,
   children,
-  onPress
+  onPress,
+  customStyles
 }) => (
   <MapView
     liteMode
-    style={styles.map}
+    style={[styles.map, { ...customStyles }]}
     initialRegion={{
       latitude: latitude,
       longitude: longitude,

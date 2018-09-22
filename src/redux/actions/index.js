@@ -32,7 +32,10 @@ import {
   UPDATE_ADDRESS_FAILED,
   DELETE_ADDRESS_REQUEST,
   DELETE_ADDRESS_SUCCESSFUL,
-  DELETE_ADDRESS_FAILED
+  DELETE_ADDRESS_FAILED,
+  TRACK_ORDER_REQUEST,
+  TRACK_ORDER_SUCCESSFUL,
+  TRACK_ORDER_FAILED
 } from "../constants";
 export const login = params => {
   return dispatch => {
@@ -300,6 +303,32 @@ export const deleteAddress = (accessToken, addressId) => {
         .catch(e => {
           dispatch({
             type: DELETE_ADDRESS_FAILED,
+            payload: e
+          });
+          reject(e);
+        });
+    });
+  };
+};
+
+export const trackOrder = (accessToken, runnerId) => {
+  return dispatch => {
+    return new Promise((resolve, reject) => {
+      dispatch({ type: TRACK_ORDER_REQUEST });
+      return api
+        .trackOrder(accessToken, runnerId)
+        .then(response => {
+          if (response) {
+            dispatch({
+              type: TRACK_ORDER_SUCCESSFUL,
+              payload: response.data
+            });
+            resolve(response.data);
+          }
+        })
+        .catch(e => {
+          dispatch({
+            type: TRACK_ORDER_FAILED,
             payload: e
           });
           reject(e);

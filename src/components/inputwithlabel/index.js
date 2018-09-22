@@ -21,7 +21,7 @@ const InputWithLabel = ({
   >
     <Text
       style={{
-        fontSize: 10,
+        fontSize: 14,
         color: Colors.TEXT_LABEL_GREY
       }}
     >
@@ -48,6 +48,7 @@ const InputWithLabel = ({
         value={value}
         autoFocus={autoFocus}
         autoCapitalize={autoCapitalize}
+        
       />
     </View>
   </View>
