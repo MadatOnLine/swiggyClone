@@ -48,7 +48,7 @@ module.exports = {
     );
   },
   editAddress: function(accessToken, id, params) {
-    return api.put(`customer/addresses`, params, {
+    return api.put(`customer/addresses/${id}`, params, {
       headers: {
         authorization: `Bearer ${accessToken}`
       }

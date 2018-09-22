@@ -7,7 +7,7 @@ import storage from "redux-persist/es/storage"; // default: localStorage if web,
 import { persistStore, persistReducer } from "redux-persist";
 const config = {
   key: "root", // key is required
-  blacklist: ["addresses", "allCategories", "promises"],
+  blacklist: ["addresses", "allCategories", "promises", "form"],
   storage // storage is now required
 };
 
