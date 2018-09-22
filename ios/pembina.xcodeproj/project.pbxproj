@@ -53,6 +53,7 @@
 		DE8B6AE1D744420EACFC16A8 /* Product Sans Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D9744F67034942B789765E9A /* Product Sans Regular.ttf */; };
 		E1FC3FB068F446C3BD50E206 /* libLRDRCTSimpleToast.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7635FF2AE6684C3E9FE8D4E7 /* libLRDRCTSimpleToast.a */; };
 		EB09B4C205BF48858B7029D5 /* Feather.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 55243A671EE0458985F32F55 /* Feather.ttf */; };
+		EB1FE708585D06FF3EC66B2C /* libPods-pembina.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B719AECCD191DE8751A340FC /* libPods-pembina.a */; };
 		EC99C6D851C740CBBB5C1660 /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DBFB972633B04671BB92DE0D /* FontAwesome.ttf */; };
 		EE8C1E7270564D3BAAFAE2A9 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7F0CB55135F84C94B53D7263 /* Zocial.ttf */; };
 		F79EC876E5DD4D03ADA07BBF /* Product Sans Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4299365D1AEE472EBF6411AF /* Product Sans Italic.ttf */; };
@@ -386,10 +387,13 @@
 		7F0CB55135F84C94B53D7263 /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		836644A3582649C5AEAC284B /* libRNVectorIcons.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNVectorIcons.a; sourceTree = "<group>"; };
+		94CB2F407CA687DF22501495 /* Pods-pembina.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-pembina.debug.xcconfig"; path = "Pods/Target Support Files/Pods-pembina/Pods-pembina.debug.xcconfig"; sourceTree = "<group>"; };
 		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
+		B719AECCD191DE8751A340FC /* libPods-pembina.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-pembina.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C2E0A32651EE48889DC88DB4 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
 		CC00C7CB9B664679A7ADF847 /* Product Sans Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Product Sans Bold.ttf"; path = "../src/assets/fonts/Product Sans Bold.ttf"; sourceTree = "<group>"; };
 		CCC09E92D1FC47D79F1410F7 /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
+		CD1F58B7C1F93F78E5D15159 /* Pods-pembina.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-pembina.release.xcconfig"; path = "Pods/Target Support Files/Pods-pembina/Pods-pembina.release.xcconfig"; sourceTree = "<group>"; };
 		CDDBE8CD8C914555AC45A7B1 /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
 		D1D4C0FF214401400076AFE3 /* pembina1024.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pembina1024.png; sourceTree = "<group>"; };
 		D9744F67034942B789765E9A /* Product Sans Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Product Sans Regular.ttf"; path = "../src/assets/fonts/Product Sans Regular.ttf"; sourceTree = "<group>"; };
@@ -425,6 +429,7 @@
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
 				E1FC3FB068F446C3BD50E206 /* libLRDRCTSimpleToast.a in Frameworks */,
 				14FD7DD4ACA24F6BBAF3E9CA /* libRNVectorIcons.a in Frameworks */,
+				EB1FE708585D06FF3EC66B2C /* libPods-pembina.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -494,6 +499,15 @@
 				00C302E41ABCB9EE00DB3ED1 /* libRCTVibration.a */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		00D2C18038B4ABAF3C549CB3 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				94CB2F407CA687DF22501495 /* Pods-pembina.debug.xcconfig */,
+				CD1F58B7C1F93F78E5D15159 /* Pods-pembina.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 		00E356EF1AD99517003FC87E /* pembinaTests */ = {
@@ -574,6 +588,7 @@
 			isa = PBXGroup;
 			children = (
 				2D16E6891FA4F8E400B85C8A /* libReact.a */,
+				B719AECCD191DE8751A340FC /* libPods-pembina.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -637,6 +652,7 @@
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				91A0384749B1442C841F7A26 /* Resources */,
 				D1D4C132214402EF0076AFE3 /* Recovered References */,
+				00D2C18038B4ABAF3C549CB3 /* Pods */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -735,10 +751,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "pembina" */;
 			buildPhases = (
+				EED28FFD47C24D2ADD9E9C56 /* [CP] Check Pods Manifest.lock */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
+				BB9ABFDB446749E1ABBC292F /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1248,6 +1266,42 @@
 			shellPath = /bin/sh;
 			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
 		};
+		BB9ABFDB446749E1ABBC292F /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-pembina/Pods-pembina-resources.sh",
+				"${PODS_ROOT}/GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Resources/GoogleMaps.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleMaps.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-pembina/Pods-pembina-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		EED28FFD47C24D2ADD9E9C56 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-pembina-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -1374,9 +1428,9 @@
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 94CB2F407CA687DF22501495 /* Pods-pembina.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "LaunchImage-2";
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = 7ULSB4F98N;
@@ -1399,9 +1453,9 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = CD1F58B7C1F93F78E5D15159 /* Pods-pembina.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "LaunchImage-2";
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 7ULSB4F98N;
 				HEADER_SEARCH_PATHS = (

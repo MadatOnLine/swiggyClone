@@ -1,11 +1,13 @@
 import React, { Component } from "react";
-import { Text, View, FlatList } from "react-native";
+import { Text, View, FlatList, TouchableOpacity } from "react-native";
 import { Colors, Metrics } from "../../utils/constants";
 import { connect } from "react-redux";
 import idx from "idx";
-import { getPastOrders } from "../../redux/actions";
+import { getPastOrders, trackOrder } from "../../redux/actions";
 import styles from "./styles";
 import upperFirst from "lodash/upperFirst";
+import { withNavigation } from "react-navigation";
+import Toast from "react-native-simple-toast";
 
 var moment = require("moment");
 
@@ -17,30 +19,42 @@ resolveOrderedItems = items =>
     .join(", "); // returns the expected output.
 
 const Order = ({
-  order_id,
+  id,
   status,
   total_amount,
   order_products,
-  order_date
+  order_date,
+  onOrderPress
 }) => (
   <View style={styles.orderWrapper}>
     <View style={styles.orderItemNameWrapper}>
       <Text
         style={{
-          fontWeight: "500"
+          fontWeight: "500",
+          color: Colors.BRAND_SAFFRON,
+          fontSize: 24
         }}
       >
-        {order_id}
+        {`ORDER # ${id}`}
       </Text>
 
-      <Text
+      <TouchableOpacity
+        onPress={onOrderPress}
         style={{
-          color: Colors.TEXT_LABEL_GREY,
-          paddingVertical: 2
+          paddingVertical: 8
         }}
       >
-        {upperFirst(status)}
-      </Text>
+        <Text
+          style={{
+            color: "rgb(93, 143, 213)",
+            paddingVertical: 2,
+            fontSize: 18,
+            fontWeight: "500"
+          }}
+        >
+          {`Status : ${upperFirst(status)}`}
+        </Text>
+      </TouchableOpacity>
 
       <Text
         style={{
@@ -57,8 +71,8 @@ const Order = ({
       </Text>
       <Text
         style={{
-          color: Colors.TEXT_LABEL_GREY,
-          fontSize: 8
+          color: Colors.KINDA_BLACK,
+          fontSize: 14
         }}
       >
         {moment(order_date).format("MMM DD,HH:MM A")}
@@ -91,6 +105,26 @@ class PastOrders extends Component {
     }
   }
 
+  onOrderPress = async item => {
+    // this.props.navigation.push("TrackOrder", { order: item });
+
+    const { api_token } = this.props;
+    const { runner_id } = item;
+
+    let id = runner_id ? runner_id : 1;
+    const res = await this.props.trackOrder(api_token, id);
+    if (item.status === "delivered") {
+      Toast.show("Your order has been delivered,enjoy your meal", Toast.SHORT);
+      return;
+    } else {
+      this.props.navigation.push("TrackOrder", {
+        latitude: res.runner.latitude,
+        longitude: res.runner.longitude,
+        order: item
+      });
+    }
+  };
+
   render() {
     const { orders } = this.state;
     return (
@@ -110,7 +144,9 @@ class PastOrders extends Component {
           </Text>
           <FlatList
             data={orders}
-            renderItem={({ item }) => <Order {...item} />}
+            renderItem={({ item }) => (
+              <Order {...item} onOrderPress={() => this.onOrderPress(item)} />
+            )}
             keyExtractor={item => String(item.id)}
           />
         </View>
@@ -118,6 +154,8 @@ class PastOrders extends Component {
     );
   }
 }
+
+const HOC = withNavigation(PastOrders);
 
 const mapStateToProps = state => {
   let api_token = idx(state, _ => _.user.api_token);
@@ -130,5 +168,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { getPastOrders }
-)(PastOrders);
+  { getPastOrders, trackOrder }
+)(HOC);

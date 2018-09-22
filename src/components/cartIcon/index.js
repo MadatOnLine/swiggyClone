@@ -17,7 +17,7 @@ export class CartIcon extends Component {
             <Text style={styles.count}>{cartItemCount}</Text>
           </View>
         ) : null}
-        <Icon name={name} />
+        <Icon name={name} size={25} />
       </View>
     );
   }

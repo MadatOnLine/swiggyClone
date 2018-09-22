@@ -48,7 +48,7 @@ module.exports = {
     );
   },
   editAddress: function(accessToken, id, params) {
-    return api.put(`customer/addresses`, params, {
+    return api.put(`customer/addresses/${id}`, params, {
       headers: {
         authorization: `Bearer ${accessToken}`
       }
@@ -74,6 +74,16 @@ module.exports = {
   getAllCategories: function(accessToken) {
     return api.get(
       `http://delivery.fleethunt.ca/v1/customer/categories?store_id=1`,
+      {
+        headers: {
+          authorization: `Bearer ${accessToken}`
+        }
+      }
+    );
+  },
+  trackOrder: function(accessToken, runnerId) {
+    return api.get(
+      `http://delivery.fleethunt.ca/v1/customer/orders/track?runner_id=${runnerId}`,
       {
         headers: {
           authorization: `Bearer ${accessToken}`

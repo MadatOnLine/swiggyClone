@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Text, View, TouchableOpacity, Geolocation } from "react-native";
+import { Text, View, TouchableOpacity, Image, Alert } from "react-native";
 import Header from "../../components/navigationHeader";
 import { Colors } from "../../utils/constants";
 import Input from "../../components/inputwithlabel";
@@ -10,6 +10,10 @@ import idx from "idx";
 import ScrollView from "react-native-input-scroll-view";
 import { saveAddress, updateAddress } from "../../redux/actions";
 import { validateAddress } from "../../utils/helpers";
+import MapView from "./mapview";
+import { Marker } from "react-native-maps";
+
+const mapHomeMarker = require("../../assets/images/home_pin.png");
 
 const FormTextInput = props => (
   <Input
@@ -135,11 +139,11 @@ const AddressTypeSelector = ({ onSelectAddressType, selectedAddressType }) => (
   </View>
 );
 
-const SaveButton = ({ onSave }) => (
+const SaveButton = ({ onSave, disabled, handleFormError }) => (
   <TouchableOpacity
-    onPress={onSave}
+    onPress={disabled ? handleFormError : onSave}
     style={{
-      backgroundColor: Colors.BRAND_SAFFRON,
+      backgroundColor: disabled ? Colors.TEXT_LABEL_GREY : Colors.BRAND_SAFFRON,
       justifyContent: "center",
       alignItems: "center",
       paddingVertical: 10
@@ -164,6 +168,25 @@ class SetAddress extends Component {
     };
   }
 
+  handleFormError = () => {
+    let { error } = this.props;
+    // let lastIndex = Object.keys(errors).length - 1;
+
+    Alert.alert(
+      "Required Field Missing",
+      error,
+      [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel"
+        },
+        { text: "OK", onPress: () => console.log("OK Pressed") }
+      ],
+      { cancelable: false }
+    );
+  };
+
   componentWillMount() {
     let {
       address = "",
@@ -177,9 +200,10 @@ class SetAddress extends Component {
     } = idx(this.props, _ => _.navigation.state.params.data) || {};
 
     if (type) {
-      this.setState({
-        selectedAddressType: type
-      });
+      this.setState({ selectedAddressType: type });
+      this.props.change("type", type);
+    } else {
+      this.props.change("type", "Home");
     }
 
     if (location) {
@@ -198,8 +222,6 @@ class SetAddress extends Component {
   componentDidMount() {
     navigator.geolocation.getCurrentPosition(
       position => {
-        debugger;
-
         let { latitude, longitude } = idx(position, _ => _.coords) || {};
 
         if (latitude) {
@@ -211,41 +233,31 @@ class SetAddress extends Component {
         }
       },
       error => this.setState({ error: error.message }),
-      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
+      {
+        enableHighAccuracy: true,
+        timeout: 20000,
+        maximumAge: 1000
+      }
     );
   }
 
   onSelectAddressType = type => {
-    this.setState({
-      selectedAddressType: type
-    });
+    this.setState({ selectedAddressType: type }, () =>
+      this.props.change("type", type)
+    );
   };
 
   saveAddress = async () => {
-    debugger;
-
     let { api_token } = this.props;
-    let { location, address_1, landmark, name } =
-      idx(this.props, _ => _.formValues) || {};
     let { selectedAddressType } = this.state;
-
     let { id } = idx(this.props, _ => _.navigation.state.params.data) || {};
 
+    debugger;
+    let params = idx(this.props, _ => _.formValues) || {};
+    params.type = selectedAddressType;
+
     if (id) {
-      let params = {};
-
-      if (location) {
-        params.location = location;
-      }
-
-      if (address_1) {
-        params.address = address_1;
-      }
-
-      if (landmark) {
-        params.landmark = landmark;
-      }
-
+      debugger;
       const res = await this.props.updateAddress(api_token, id, params);
       if (res) {
         this.props.navigation.pop();
@@ -253,12 +265,24 @@ class SetAddress extends Component {
         alert("error");
       }
     } else {
-      console.log("New");
+      debugger;
+      const res = await this.props.saveAddress(api_token, params);
+      if (res) {
+        this.props.navigation.pop();
+      } else {
+        alert("error");
+      }
     }
   };
 
+  onMapPress(e) {
+    console.log(e.nativeEvent);
+  }
+
   render() {
     const { selectedAddressType } = this.state;
+    const { latitude, longitude } = idx(this.props, _ => _.formValues) || {};
+    const { error } = this.props;
     return (
       <View
         style={{
@@ -271,73 +295,145 @@ class SetAddress extends Component {
           label="Set delivery location"
           onLeft={() => this.props.navigation.pop()}
         />
-        <ScrollView
-          keyboardOffset={300}
-          style={{
-            paddingVertical: 10,
-            paddingHorizontal: 10
-          }}
-          keyboardShouldPersistTaps="always"
-        >
-          {/* <Text
+
+        <ScrollView keyboardOffset={300} keyboardShouldPersistTaps="always">
+          <MapView
+            latitude={latitude}
+            longitude={longitude}
+            onPress={this.onMapPress}
+          >
+            <Marker
+              coordinate={{
+                latitude: latitude,
+                longitude: longitude
+              }}
+            >
+              <View
+                style={{
+                  backgroundColor: "rgba(1,1,1,0.9)",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  width: 35,
+                  height: 35,
+                  borderRadius: 35 / 2
+                }}
+              >
+                <Image
+                  source={mapHomeMarker}
+                  style={{
+                    width: 25,
+                    height: 25,
+                    tintColor: Colors.REAL_WHITE,
+                    resizeMode: "contain"
+                  }}
+                />
+              </View>
+            </Marker>
+          </MapView>
+          <View
             style={{
-              fontSize: 16,
-              fontWeight: "500",
-              marginLeft: 10
+              paddingVertical: 10,
+              paddingHorizontal: 10,
+              paddingBottom: 100
             }}
           >
-            Set delivery location
-          </Text> */}
-          <Field
-            component={FormTextInput}
-            name="location"
-            type="text"
-            label="Location"
-            prefix=""
-            value={this.props.formValues.location}
-          />
-          <Field
-            component={FormTextInput}
-            name="address_1"
-            type="text"
-            label="House / Flat No"
-            prefix=""
-            value={this.props.formValues.address_1}
-          />
+            <Field
+              component={FormTextInput}
+              name="name"
+              type="numeric"
+              label="Your Name"
+              prefix=""
+              value={this.props.formValues.name}
+            />
 
-          <Field
-            component={FormTextInput}
-            name="landmark"
-            type="text"
-            label="Landmark"
-            prefix=""
-            value={this.props.formValues.landmark}
-          />
+            <Field
+              component={FormTextInput}
+              name="mobile_no"
+              keyboardType="number-pad"
+              label="Mobile Number"
+              prefix=""
+              value={this.props.formValues.mobile_number}
+            />
 
-          <AddressTypeSelector
-            selectedAddressType={selectedAddressType}
-            onSelectAddressType={this.onSelectAddressType}
-          />
+            <Field
+              component={FormTextInput}
+              name="locality"
+              type="text"
+              label="Locality"
+              prefix=""
+              value={this.props.formValues.locality}
+            />
+            <Field
+              component={FormTextInput}
+              name="address"
+              type="text"
+              label="House / Flat No"
+              prefix=""
+              value={this.props.formValues.address_1}
+            />
 
-          <SaveButton onSave={this.saveAddress} />
+            <Field
+              component={FormTextInput}
+              name="landmark"
+              type="text"
+              label="Landmark"
+              prefix=""
+              value={this.props.formValues.landmark}
+            />
+
+            <Field
+              component={FormTextInput}
+              name="city"
+              type="text"
+              label="City"
+              prefix=""
+              value={this.props.formValues.city}
+            />
+
+            <Field
+              component={FormTextInput}
+              name="state"
+              type="text"
+              label="State"
+              prefix=""
+              value={this.props.formValues.state}
+            />
+
+            <Field
+              component={FormTextInput}
+              name="pincode"
+              type="text"
+              label="Pincode"
+              prefix=""
+              value={this.props.formValues.pincode}
+            />
+
+            <AddressTypeSelector
+              selectedAddressType={selectedAddressType}
+              onSelectAddressType={this.onSelectAddressType}
+            />
+
+            <SaveButton
+              onSave={this.saveAddress}
+              disabled={this.props.error}
+              handleFormError={this.handleFormError}
+            />
+          </View>
         </ScrollView>
       </View>
     );
   }
 }
 
-const form = reduxForm({
-  form: "editaddress",
-  validate: validateAddress
-})(SetAddress);
+const form = reduxForm({ form: "editaddress", validate: validateAddress })(
+  SetAddress
+);
 
 const mapStateToProps = state => {
   let formValues = idx(state, _ => _.form.editaddress.values) || {};
   let api_token = idx(state, _ => _.user.api_token) || "";
-  return {
-    formValues,
-    api_token
-  };
+  let error = idx(state, _ => _.form.editaddress.error) || "";
+  return { formValues, api_token, error };
 };
 
 export default connect(

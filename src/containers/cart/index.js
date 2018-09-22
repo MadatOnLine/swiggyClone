@@ -1,5 +1,12 @@
 import React, { Component } from "react";
-import { View, Text, Image, ScrollView } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  ScrollView,
+  Modal,
+  TouchableOpacity
+} from "react-native";
 import { CartItem } from "./cartItem";
 import Bill from "./bill";
 import Addresses from "./addresses";
@@ -11,13 +18,16 @@ import { connect } from "react-redux";
 import { addToCart, removeItemFromCart } from "../../redux/actions";
 import CartEmpty from "./cartEmpty";
 import { getCartTotal, getTaxAmount } from "../../utils/helpers";
+import ApplyCoupon from "./applycoupon";
 
 let discountImage = require("../../assets/images/discount.png");
 
 class Cart extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      showApplyCoupon: false
+    };
   }
 
   render() {
@@ -51,7 +61,8 @@ class Cart extends Component {
                   />
                 ))
               : null}
-            <View
+            <TouchableOpacity
+              onPress={() => this.setState({ showApplyCoupon: true })}
               style={{
                 backgroundColor: Colors.REAL_WHITE,
                 marginVertical: 15,
@@ -82,12 +93,22 @@ class Cart extends Component {
                 size={20}
                 color={Colors.TEXT_LABEL_GREY}
               />
-            </View>
+            </TouchableOpacity>
 
             <Bill itemTotal={cartTotal} tax={tax} total={total} />
             <Addresses />
           </ScrollView>
           <PayNowButton total={total} />
+          <Modal
+            visible={this.state.showApplyCoupon}
+            transparent
+            onRequestClose={() => this.setState({ showApplyCoupon: false })}
+            animationType="slide"
+          >
+            <ApplyCoupon
+              closeModal={() => this.setState({ showApplyCoupon: false })}
+            />
+          </Modal>
         </View>
       );
     } else {
