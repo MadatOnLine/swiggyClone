@@ -90,5 +90,15 @@ module.exports = {
         }
       }
     );
+  },
+  getOffers: function(accessToken) {
+    return api.get(
+      `http://delivery.fleethunt.ca/v1/customer/offers?store_id=${STORE_ID}`,
+      {
+        headers: {
+          authorization: `Bearer ${accessToken}`
+        }
+      }
+    );
   }
 };

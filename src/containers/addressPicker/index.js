@@ -119,7 +119,7 @@ export class AddressPicker extends Component {
         <FlatList
           keyboardShouldPersistTaps="always"
           contentContainerStyle={{
-            backgroundColor: Colors.REAL_WHITE,
+            backgroundColor: Colors.SCREEN_WHITE,
             marginTop: 20,
             paddingHorizontal: 10,
             paddingVertical: 15

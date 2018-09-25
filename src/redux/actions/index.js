@@ -35,7 +35,10 @@ import {
   DELETE_ADDRESS_FAILED,
   TRACK_ORDER_REQUEST,
   TRACK_ORDER_SUCCESSFUL,
-  TRACK_ORDER_FAILED
+  TRACK_ORDER_FAILED,
+  GET_OFFERS_REQUEST,
+  GET_OFFERS_SUCCESSFUL,
+  GET_OFFERS_FAILED
 } from "../constants";
 export const login = params => {
   return dispatch => {
@@ -329,6 +332,32 @@ export const trackOrder = (accessToken, runnerId) => {
         .catch(e => {
           dispatch({
             type: TRACK_ORDER_FAILED,
+            payload: e
+          });
+          reject(e);
+        });
+    });
+  };
+};
+
+export const getOffers = accessToken => {
+  return dispatch => {
+    return new Promise((resolve, reject) => {
+      dispatch({ type: GET_OFFERS_REQUEST });
+      return api
+        .getOffers(accessToken)
+        .then(response => {
+          if (response) {
+            dispatch({
+              type: GET_OFFERS_SUCCESSFUL,
+              payload: response.data
+            });
+            resolve(response.data);
+          }
+        })
+        .catch(e => {
+          dispatch({
+            type: GET_OFFERS_FAILED,
             payload: e
           });
           reject(e);
