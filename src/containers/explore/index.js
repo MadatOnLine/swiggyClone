@@ -1,10 +1,18 @@
 import React, { Component } from "react";
-import { Text, View, ScrollView, TouchableOpacity } from "react-native";
+import {
+  Text,
+  View,
+  ScrollView,
+  TouchableOpacity,
+  FlatList,
+  ImageBackground
+} from "react-native";
 import { Colors } from "../../utils/constants";
 import Icon from "react-native-vector-icons/Ionicons";
 import ImageGrid from "../../components/imagegrid";
 import { connect } from "react-redux";
 import idx from "idx";
+import { getOffers } from "../../redux/actions";
 
 const SearchBar = ({ onPress }) => (
   <TouchableOpacity
@@ -38,6 +46,46 @@ const SearchBar = ({ onPress }) => (
   </TouchableOpacity>
 );
 
+const OfferItem = ({ image, title, description }) => (
+  <ImageBackground
+    source={{ uri: image }}
+    style={{
+      width: "100%",
+      height: 150,
+      resizeMode: "contain"
+    }}
+  >
+    <View
+      style={{
+        flex: 1,
+        backgroundColor: "rgba(1,1,1,0.7)",
+        justifyContent: "center",
+        alignItems: "center",
+        paddingHorizontal: 15
+      }}
+    >
+      <Text
+        style={{
+          color: Colors.BRAND_SAFFRON,
+          fontSize: 25
+        }}
+      >
+        {title}
+      </Text>
+      <Text
+        style={{
+          color: Colors.REAL_WHITE,
+          fontSize: 14,
+          textAlign: "center",
+          paddingVertical: 10
+        }}
+      >
+        {description}
+      </Text>
+    </View>
+  </ImageBackground>
+);
+
 class Explore extends Component {
   constructor() {
     super();
@@ -45,6 +93,17 @@ class Explore extends Component {
       searching: false
     };
   }
+
+  componentWillMount() {
+    this._getOffers();
+  }
+
+  _getOffers = async () => {
+    const { api_token } = this.props;
+    const res = await this.props.getOffers(api_token);
+    console.log(res);
+    debugger;
+  };
 
   render() {
     const { products } = this.props;
@@ -57,7 +116,7 @@ class Explore extends Component {
           paddingTop: 25
         }}
       >
-        <SearchBar onPress={() => this.setState({ searching: true })} />
+        {/* <SearchBar onPress={() => this.setState({ searching: true })} />
         {!searching ? (
           <ScrollView>
             <ImageGrid
@@ -66,7 +125,12 @@ class Explore extends Component {
               onAddToCart={() => null}
             />
           </ScrollView>
-        ) : null}
+        ) : null} */}
+        <FlatList
+          data={this.props.offers}
+          keyExtractor={(item, index) => String(index)}
+          renderItem={({ item }) => <OfferItem {...item} />}
+        />
       </View>
     );
   }
@@ -74,12 +138,17 @@ class Explore extends Component {
 
 const mapStateToProps = state => {
   let products = idx(state, _ => _.dashboard.data.products) || [];
+  let api_token = idx(state, _ => _.user.api_token);
+  let offers = idx(state, _ => _.offers.offers) || [];
+
   return {
-    products
+    products,
+    api_token,
+    offers
   };
 };
 
 export default connect(
   mapStateToProps,
-  null
+  { getOffers }
 )(Explore);

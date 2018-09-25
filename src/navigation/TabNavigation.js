@@ -17,7 +17,7 @@ export default createBottomTabNavigator({
       tabBarIcon: props => <Icon name="ios-compass-outline" size={25} />
     })
   },
-  Explore: {
+  Offers: {
     screen: Explore,
     navigationOptions: () => ({
       title: `Explore`,

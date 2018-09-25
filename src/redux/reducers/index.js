@@ -10,6 +10,7 @@ import categoryItems from "./categoryItems";
 import registration from "./registration";
 import allCategories from "./allCategories";
 import orderStatus from "./orderStatus";
+import offers from "./offers";
 
 export default combineReducers({
   user,
@@ -22,5 +23,6 @@ export default combineReducers({
   categoryItems,
   allCategories,
   orderStatus,
+  offers,
   form: reducer
 });
