@@ -1,0 +1,10 @@
+{
+  "repoUrl": "https://murcul-pembinapizza@bitbucket.org/murcul-pembinapizza/pembina-pizza.git",
+  "folders": [
+    "."
+  ],
+  "branch": "master",
+  "ignore": [
+    "git-slice.json"
+  ]
+}
