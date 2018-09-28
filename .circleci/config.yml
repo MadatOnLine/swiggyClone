@@ -18,7 +18,7 @@ jobs:
       - run: git config --global user.email "murcul-reviewer@murcul.com"
       - run: git config --global user.name "Murcul Reviewer"
       - run: ~/node_modules/.bin/git-slice pull --username $USERNAME --password "$PASSWORD"
-      - run: git reset --hard origin/master && git pull -f origin master && ~/node_modules/.bin/git-slice pull --username $USERNAME --password "$PASSWORD" && git push origin master
+      - run: git reset --hard origin/master && git pull -f origin master && ~/node_modules/.bin/git-slice pull --username $USERNAME --password "$PASSWORD"
 
 workflows:
   version: 2
