@@ -5,6 +5,7 @@
   ],
   "branch": "master",
   "ignore": [
-    "git-slice.json"
+    "git-slice.json",
+    ".circleci/config.yml"
   ]
 }
