@@ -1,10 +1,11 @@
 {
-  "repoUrl": "https://murcul-pembinapizza@bitbucket.org/murcul-pembinapizza/pembina-pizza.git",
+  "repoUrl": "https://murcul-pembinapizza@bitbucket.org/v920749/fhdelivery.git",
   "folders": [
-    "."
+    "./"
   ],
   "branch": "master",
   "ignore": [
-    "git-slice.json"
+    "git-slice.json",
+    ".circleci/config.yml"
   ]
 }
