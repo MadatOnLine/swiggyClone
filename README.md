@@ -1,4 +1,4 @@
-# client-pembina-pizza-rn
+# Pembina
 
 ## Requirements
 
