@@ -3,7 +3,7 @@
 ## Requirements
 
 1. OS X - This repo only contains the iOS implementation right now, and Xcode only runs on Mac.
-2. New to Xcode?  [Download it](https://developer.apple.com/xcode/downloads/) from the Mac App Store.
+2. New to Xcode?  [Download it](https://developer.apple.com/xcode/downloads/) from the Mac App Store. (its recommended to use xcode 9.4)
 3. [Homebrew](http://brew.sh/) is the recommended way to install node, watchman, and flow.
 4. New to node or npm? `brew install node`
 5. We recommend installing [watchman](https://facebook.github.io/watchman/docs/install.html), otherwise you might hit a node file watching bug.  `brew install watchman`
