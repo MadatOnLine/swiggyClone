@@ -1,5 +1,4 @@
 # client-pembina-pizza-rn
-# reasrt
 ## Requirements
 
 1. OS X - This repo only contains the iOS implementation right now, and Xcode only runs on Mac.
@@ -32,6 +31,6 @@ packager that will transform your JS code on-the-fly:
 
 In case if you face any issue while runnign the app , please raise an issue
 
-#Environment Configuration
+## Environment Configuration
 
 make sure to update .env.production file with your google place search and google maps api token
