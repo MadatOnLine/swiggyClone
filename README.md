@@ -31,3 +31,7 @@ packager that will transform your JS code on-the-fly:
 4. Build and run the project with the Xcode run button.
 
 In case if you face any issue while runnign the app , please raise an issue
+
+#Environment Configuration
+
+make sure to update .env.production file with your google place search and google maps api token
